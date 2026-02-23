@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vollmer QWD 760 — Pre-Installation Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap');
+:root{
+  --vblue:#003366;--vblue2:#004080;--vbluel:#0066b3;--vgray:#4a5568;--vgrayl:#718096;--vgrayll:#a0aec0;
+  --vbg:#f7f8fa;--vbg2:#edf0f4;--vcard:#fff;--vborder:#dde2ea;--vred:#c0392b;--vorange:#e67e22;
+  --vgreen:#27ae60;--vpurple:#6c5ce7;--vgold:#d4a017;
+  --sh:0 2px 10px rgba(0,51,102,.06);--shl:0 6px 24px rgba(0,51,102,.1)
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);color:#1a202c;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* BANNER */
+.banner{background:linear-gradient(135deg,#002244 0%,#003366 60%,#004080 100%);color:#fff;padding:20px 40px;position:relative}
+.banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#0066b3,#00aaff,#0066b3)}
+.banner-in{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.banner-left .badge{display:inline-block;background:#c0392b;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:8px;color:#fff}
+.banner-left h1{font-size:30px;font-weight:800;line-height:1.15}
+.banner-left h1 span{color:#5bb8ff}
+.banner-left .sub{font-size:12px;color:rgba(255,255,255,.4);margin-top:2px}
+.banner-right{text-align:right;font-size:11px;color:rgba(255,255,255,.3);line-height:2.2}
+.banner-right strong{color:rgba(255,255,255,.65);font-weight:600}
+
+/* TABS */
+.tabs{background:#cc5500;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.1)}
+.tabs-in{max-width:1200px;margin:0 auto;padding:0 40px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.tabs-in::-webkit-scrollbar{display:none}
+.tb{background:none;border:none;color:rgba(255,255,255,.5);font-family:inherit;font-size:12.5px;font-weight:600;padding:12px 13px;cursor:pointer;white-space:nowrap;position:relative;transition:color .2s}
+.tb:hover{color:rgba(255,255,255,.85)}.tb.active{color:#fff}
+.tb.active::after{content:'';position:absolute;bottom:0;left:11px;right:11px;height:3px;background:#fff;border-radius:3px 3px 0 0}
+
+.main{max-width:1200px;margin:0 auto;padding:22px 40px 50px}
+.tc{display:none;animation:fu .25s ease}.tc.active{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.st{font-size:24px;font-weight:800;color:var(--vblue);margin-bottom:4px}
+.sd{font-size:14px;color:var(--vgrayl);margin-bottom:22px}
+.card{background:var(--vcard);border:1px solid var(--vborder);border-radius:10px;padding:22px;margin-bottom:16px;box-shadow:var(--sh)}
+.ct{font-size:15px;font-weight:700;color:var(--vblue);margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.ct .ic{width:28px;height:28px;background:var(--vbg2);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sp{width:100%;border-collapse:collapse}
+.sp tr{border-bottom:1px solid #f0f2f5}.sp tr:last-child{border-bottom:none}
+.sp td{padding:9px 0;font-size:14px;vertical-align:top}
+.sp td:first-child{color:var(--vgrayl);font-weight:500;width:45%;padding-right:10px}
+.sp td:last-child{font-weight:600;color:#1a202c}
+.badge{display:inline-flex;font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px}
+.badge-r{background:#fef2f0;color:#c0392b}.badge-i{background:#e8f0fe;color:#0066b3}.badge-w{background:#fdf8e8;color:#d4a017}
+
+.hb{border-left:4px solid;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:16px}
+.hb.danger{background:#fef7f6;border-left-color:#c0392b}
+.hb.warn{background:#fdfaf0;border-left-color:var(--vgold)}
+.hb.info{background:#f0f6ff;border-left-color:var(--vbluel)}
+.hb strong{display:block;font-size:13px;font-weight:700;margin-bottom:3px}
+.hb p{font-size:13px;color:var(--vgray);margin:0}
+
+/* Emergency */
+.emergency{background:#c0392b;color:#fff;border-radius:10px;padding:18px 22px;margin-bottom:18px;box-shadow:0 4px 16px rgba(192,57,43,.25)}
+.emergency strong{font-size:15px;display:block;margin-bottom:4px}
+.emergency p{font-size:13px;opacity:.92;margin:0}
+
+/* Steps */
+.step{display:flex;gap:10px;margin-bottom:10px}
+.sn{width:32px;height:32px;background:var(--vblue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.sc{flex:1;background:var(--vcard);border:1px solid var(--vborder);border-radius:8px;padding:12px 16px}
+.sc h4{font-size:14px;font-weight:700;color:var(--vblue);margin-bottom:2px}
+.sc p{font-size:13px;color:var(--vgray);margin:0}
+
+/* Checklist */
+.cl{list-style:none}.cl li{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid #f0f2f5;font-size:14px}
+.cl li:last-child{border-bottom:none}
+.cb{width:20px;height:20px;border:2px solid var(--vborder);border-radius:4px;flex-shrink:0;margin-top:2px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;background:#fff;position:relative}
+.cb:hover{border-color:var(--vbluel);background:rgba(0,102,179,0.04)}
+.cb.checked{background:var(--vblue);border-color:var(--vblue)}
+.cb.checked::after{content:'✓';color:#fff;font-size:13px;font-weight:700}
+.cl-l{flex:1}.cl-l strong{display:block;color:#1a202c;font-weight:600;font-size:14px}.cl-l span{color:var(--vgrayl);font-size:12px}
+
+/* Drawings */
+.img-card{background:var(--vcard);border:1px solid var(--vborder);border-radius:8px;overflow:hidden;box-shadow:var(--sh);margin-bottom:14px}
+.img-card img{width:100%;display:block;cursor:pointer;transition:transform .2s}
+.img-card img:hover{transform:scale(1.01)}
+.img-card .il{padding:10px 16px;font-size:13px;color:var(--vgrayl);font-weight:600;border-top:1px solid #f0f2f5}
+
+/* Lightbox */
+.lb{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,20,40,.94);z-index:1000;align-items:center;justify-content:center;padding:30px;cursor:pointer}
+.lb.active{display:flex}.lb img{max-width:92%;max-height:92%;object-fit:contain;border-radius:4px}
+.lb-x{position:absolute;top:12px;right:20px;color:#fff;font-size:26px;cursor:pointer}
+
+/* Transport */
+.scene{position:relative;background:linear-gradient(180deg,#87CEEB 0%,#b8e0f7 50%,#7ab648 50.5%,#5a9a30 100%);border-radius:8px;height:240px;overflow:hidden;margin-bottom:14px}
+.road{position:absolute;bottom:28px;left:0;right:0;height:40px;background:#555}
+.road::before{content:'';position:absolute;top:18px;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,#fff 0,#fff 24px,transparent 24px,transparent 48px);animation:roadAn 1.5s linear infinite}
+@keyframes roadAn{0%{transform:translateX(0)}100%{transform:translateX(-48px)}}
+.scene-ground{position:absolute;bottom:0;left:0;right:0;height:28px;background:#4a8a28}
+/* Clouds */
+.sc-cloud{position:absolute;background:rgba(255,255,255,0.75);border-radius:40px;height:18px}
+.sc-c1{top:18px;left:8%;width:60px;animation:cDrift 14s linear infinite}
+.sc-c2{top:40px;left:55%;width:45px;animation:cDrift 18s linear infinite}
+.sc-c3{top:12px;left:78%;width:35px;animation:cDrift 22s linear infinite}
+@keyframes cDrift{0%{transform:translateX(0)}100%{transform:translateX(-80px)}}
+/* Sun */
+.sc-sun{position:absolute;top:12px;right:25px;width:32px;height:32px;background:#FFD700;border-radius:50%;box-shadow:0 0 20px rgba(255,215,0,0.4)}
+/* Factory — only "VOLLMER" name */
+.sc-factory{position:absolute;right:30px;bottom:68px;width:120px;height:95px;background:#7a8a9a;border-radius:3px 3px 0 0}
+.sc-factory::before{content:'';display:none}
+.sc-factory::after{content:'';position:absolute;bottom:0;left:18px;width:24px;height:42px;background:#5a6a7a;border-radius:2px 2px 0 0;box-shadow:42px 0 0 #5a6a7a}
+.sc-fchimney{position:absolute;right:98px;bottom:163px;width:14px;height:38px;background:#6a7a8a;border-radius:2px 2px 0 0}
+.sc-smoke{position:absolute;right:100px;bottom:201px;width:10px;height:10px;background:rgba(255,255,255,0.45);border-radius:50%;animation:smUp 3s ease-out infinite}
+.sc-smoke:nth-child(2){animation-delay:1s;right:96px}.sc-smoke:nth-child(3){animation-delay:2s;right:104px}
+@keyframes smUp{0%{transform:translateY(0) scale(1);opacity:.5}100%{transform:translateY(-55px) scale(2.2);opacity:0}}
+
+/* ===== ANIMATION TOTAL: 20s cycle ===== */
+/* Phase 1 (0-4s): Truck arrives from left, stops at center */
+/* Phase 2 (4-7s): Crane slings come down to box, box on truck fades */
+/* Phase 3 (7-11s): Box lifts up with crane, moves right toward factory */
+/* Phase 4 (11-14s): Box placed on ground near factory */
+/* Phase 5 (14-18s): Forklift comes, pushes box into factory */
+/* Phase 6 (18-20s): Reset */
+
+/* Open Lorry */
+.lorry{position:absolute;bottom:48px;animation:lorryGo 20s ease-in-out infinite}
+@keyframes lorryGo{
+  0%{left:-220px}
+  15%{left:30px}
+  35%{left:30px}
+  55%{left:110%}
+  100%{left:110%}
+}
+.lorry-cab{position:absolute;bottom:0;left:0;width:55px;height:48px;background:#d35400;border-radius:5px 10px 0 0}
+.lorry-cab::before{content:'';position:absolute;top:7px;right:3px;width:26px;height:19px;background:rgba(173,216,230,0.65);border-radius:2px;border:2px solid #b84700}
+.lorry-bed{position:absolute;bottom:0;left:55px;width:130px;height:8px;background:#444;border-radius:1px}
+.lorry-rail{position:absolute;bottom:8px;width:3px;height:36px;background:#555;border-radius:1px}
+.lr-l{left:55px}.lr-m{left:119px}.lr-r{left:182px}
+.lorry-side{position:absolute;bottom:8px;left:58px;width:124px;height:11px;background:#666;border-radius:1px}
+
+/* Wooden Box on lorry — disappears when crane lifts */
+.wb-truck{position:absolute;bottom:19px;left:66px;width:106px;height:40px;background:linear-gradient(180deg,#c8964c,#a07030);border:2px solid #8b6020;border-radius:2px;animation:wbTruckVis 20s ease-in-out infinite}
+@keyframes wbTruckVis{
+  0%{opacity:1}
+  15%{opacity:1}
+  28%{opacity:1}
+  32%{opacity:0}
+  100%{opacity:0}
+}
+.wb-truck::before{content:'VOLLMER';position:absolute;top:4px;left:4px;font-size:5px;font-weight:800;color:#fff;background:rgba(0,0,0,0.35);padding:1px 4px;border-radius:1px;letter-spacing:.6px}
+.wb-truck::after{content:'QWD 760';position:absolute;top:50%;left:55%;transform:translate(-50%,-50%);font-size:8px;font-weight:700;color:#fff;background:rgba(0,0,0,0.3);padding:1px 6px;border-radius:2px;letter-spacing:.8px;white-space:nowrap}
+.wb-grain{position:absolute;top:10px;left:3px;right:3px;height:1px;background:rgba(139,96,32,0.35);box-shadow:0 7px 0 rgba(139,96,32,0.25),0 14px 0 rgba(139,96,32,0.3)}
+.wb-nail{position:absolute;width:3px;height:3px;background:#8b6020;border-radius:50%;border:1px solid #6a4a18}
+/* Lorry wheels */
+.lw{position:absolute;bottom:-10px;width:20px;height:20px;background:#222;border-radius:50%;border:3px solid #444;animation:wSpin .5s linear infinite}
+.lw::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:6px;height:6px;background:#777;border-radius:50%}
+.lw1{left:8px}.lw2{left:34px}.lw3{left:130px}.lw4{left:160px}
+@keyframes wSpin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+
+/* Hydra Crane — starts near lorry, moves with box to factory */
+.hcrane{position:absolute;bottom:68px;left:180px;animation:craneMove 20s ease-in-out infinite}
+@keyframes craneMove{
+  0%{opacity:0;left:180px}
+  18%{opacity:0;left:180px}
+  22%{opacity:1;left:180px}
+  30%{opacity:1;left:180px}
+  35%{opacity:1;left:180px}
+  50%{opacity:1;left:calc(100% - 200px)}
+  55%{opacity:1;left:calc(100% - 200px)}
+  60%{opacity:0;left:calc(100% - 200px)}
+  100%{opacity:0;left:180px}
+}
+.hc-base{position:absolute;bottom:0;left:-24px;width:72px;height:24px;background:#e8b020;border-radius:3px}
+.hc-base::after{content:'';position:absolute;bottom:-7px;left:6px;width:14px;height:14px;background:#333;border-radius:50%;box-shadow:40px 0 0 #333}
+.hc-turret{position:absolute;bottom:24px;left:-8px;width:24px;height:16px;background:#d4a020;border-radius:3px 3px 0 0}
+.hc-boom{position:absolute;bottom:40px;left:-1px;width:10px;height:100px;background:linear-gradient(90deg,#e8b020,#c89a18);transform-origin:bottom center;border-radius:2px;animation:boomSw 20s ease-in-out infinite}
+@keyframes boomSw{
+  0%,20%{transform:rotate(25deg)}
+  28%{transform:rotate(10deg)}
+  35%{transform:rotate(10deg)}
+  50%{transform:rotate(20deg)}
+  55%{transform:rotate(30deg)}
+  100%{transform:rotate(25deg)}
+}
+/* Crane slings/cables */
+.hc-sling{position:absolute;width:1.5px;background:#333;transform-origin:top center;animation:slingDown 20s ease-in-out infinite}
+.hc-sling-l{top:-8px;left:-2px;height:0}
+.hc-sling-r{top:-8px;left:8px;height:0}
+@keyframes slingDown{
+  0%,22%{height:0}
+  26%{height:50px}
+  30%{height:30px}
+  50%{height:30px}
+  54%{height:50px}
+  58%{height:0}
+  100%{height:0}
+}
+.hc-cable{position:absolute;top:-8px;left:2px;width:2px;height:32px;background:#333;transform:rotate(-20deg);transform-origin:top center}
+.hc-hook{position:absolute;top:28px;left:-3px;width:10px;height:12px;border:2px solid #333;border-top:none;border-radius:0 0 6px 6px}
+
+/* Lifted wooden box — follows crane, lifts from truck area, moves to factory */
+.wb-lift{position:absolute;bottom:68px;left:195px;width:70px;height:34px;background:linear-gradient(180deg,#c8964c,#a07030);border:2px solid #8b6020;border-radius:2px;opacity:0;animation:bxLift 20s ease-in-out infinite}
+@keyframes bxLift{
+  0%,26%{opacity:0;left:195px;bottom:68px}
+  30%{opacity:1;left:195px;bottom:68px}
+  35%{opacity:1;left:195px;bottom:130px}
+  50%{opacity:1;left:calc(100% - 185px);bottom:130px}
+  55%{opacity:1;left:calc(100% - 185px);bottom:68px}
+  60%{opacity:1;left:calc(100% - 185px);bottom:68px}
+  72%{opacity:1;left:calc(100% - 165px);bottom:68px}
+  78%{opacity:0;left:calc(100% - 150px);bottom:68px}
+  100%{opacity:0;left:195px;bottom:68px}
+}
+.wb-lift::before{content:'VOLLMER';position:absolute;top:3px;left:3px;font-size:5px;font-weight:800;color:#fff;background:rgba(0,0,0,0.35);padding:1px 3px;border-radius:1px;letter-spacing:.5px}
+.wb-lift::after{content:'QWD 760';position:absolute;top:50%;left:55%;transform:translate(-50%,-50%);font-size:7px;font-weight:700;color:#fff;background:rgba(0,0,0,0.3);padding:1px 5px;border-radius:2px;white-space:nowrap}
+
+/* Forklift — comes after crane unloads, pushes box into factory */
+.forklift{position:absolute;bottom:68px;opacity:0;transform:scaleX(-1);animation:forkGo 20s ease-in-out infinite}
+@keyframes forkGo{
+  0%,58%{opacity:0;left:-80px}
+  63%{opacity:1;left:80px}
+  70%{opacity:1;left:calc(100% - 220px)}
+  76%{opacity:1;left:calc(100% - 200px)}
+  82%{opacity:0;left:calc(100% - 185px)}
+  100%{opacity:0;left:-80px}
+}
+.fk-body{position:absolute;bottom:0;width:50px;height:32px;background:#e8a020;border-radius:3px 3px 0 0}
+.fk-roof{position:absolute;bottom:32px;left:2px;width:46px;height:4px;background:#d49018;border-radius:2px}
+.fk-mast{position:absolute;bottom:0;right:-4px;width:4px;height:40px;background:#888;border-radius:1px}
+.fk-fork{position:absolute;bottom:0;right:-18px;width:16px;height:3px;background:#888;border-radius:1px;box-shadow:0 -8px 0 #888}
+.fk-wheel{position:absolute;bottom:-8px;width:14px;height:14px;background:#333;border-radius:50%;border:2px solid #555}
+.fk-w1{left:4px}.fk-w2{right:4px}
+
+/* SVG Diagram */
+.vo-wrap{background:#fff;border:1px solid var(--vborder);border-radius:10px;overflow:hidden;box-shadow:var(--sh);margin-bottom:16px}
+.vo-legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding:12px;background:var(--vbg2);border-top:1px solid var(--vborder)}
+.vo-leg{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--vgray)}
+.vo-dot{width:8px;height:8px;border-radius:50%}
+
+.footer{max-width:1200px;margin:0 auto;padding:16px 40px 30px;text-align:center;font-size:10px;color:var(--vgrayll)}
+.footer-line{width:40px;height:3px;background:var(--vbluel);margin:0 auto 8px;border-radius:3px}
+
+@media(max-width:768px){
+  .banner{padding:16px 16px}.banner-left h1{font-size:22px}
+  .main{padding:16px}.g2{grid-template-columns:1fr}
+  .tabs-in{padding:0 10px}.tb{font-size:10px;padding:8px 8px}
+}
+</style>
+</head>
+<body>
+
+<!-- WELCOME DIALOG -->
+<div id="welcomeOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,20,50,0.82);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)">
+  <div style="background:#fff;border-radius:16px;width:100%;max-width:480px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.35)">
+    <!-- Dialog Header -->
+    <div style="background:linear-gradient(135deg,#002244,#003366);padding:22px 28px 18px">
+      <div style="display:inline-block;background:#cc5500;color:#fff;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:3px;margin-bottom:8px">Pre-Installation Report</div>
+      <div style="font-size:22px;font-weight:800;color:#fff">Vollmer <span style="color:#5bb8ff">QWD 760</span></div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px">Please enter your details to continue — all fields are optional</div>
+    </div>
+    <!-- Dialog Body -->
+    <div style="padding:22px 28px 10px">
+      <div style="margin-bottom:14px">
+        <label style="font-size:11px;font-weight:700;color:#003366;display:block;margin-bottom:5px;letter-spacing:.3px">COMPANY NAME</label>
+        <input id="dlg-company" type="text" placeholder="e.g. Precision Tools Pvt Ltd" style="width:100%;border:none;border-bottom:2px solid #dde2ea;padding:8px 4px;font-size:14px;font-family:inherit;outline:none;color:#1a202c;transition:border-color .2s" onfocus="this.style.borderColor='#cc5500'" onblur="this.style.borderColor='#dde2ea'">
+      </div>
+      <div style="margin-bottom:14px">
+        <label style="font-size:11px;font-weight:700;color:#003366;display:block;margin-bottom:5px;letter-spacing:.3px">LOCATION / CITY</label>
+        <input id="dlg-location" type="text" placeholder="e.g. Bangalore, Karnataka" style="width:100%;border:none;border-bottom:2px solid #dde2ea;padding:8px 4px;font-size:14px;font-family:inherit;outline:none;color:#1a202c;transition:border-color .2s" onfocus="this.style.borderColor='#cc5500'" onblur="this.style.borderColor='#dde2ea'">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#003366;display:block;margin-bottom:5px;letter-spacing:.3px">CONTACT PERSON</label>
+          <input id="dlg-contact" type="text" placeholder="Full name" style="width:100%;border:none;border-bottom:2px solid #dde2ea;padding:8px 4px;font-size:14px;font-family:inherit;outline:none;color:#1a202c;transition:border-color .2s" onfocus="this.style.borderColor='#cc5500'" onblur="this.style.borderColor='#dde2ea'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:700;color:#003366;display:block;margin-bottom:5px;letter-spacing:.3px">MOBILE</label>
+          <input id="dlg-mobile" type="tel" placeholder="+91 XXXXX XXXXX" style="width:100%;border:none;border-bottom:2px solid #dde2ea;padding:8px 4px;font-size:14px;font-family:inherit;outline:none;color:#1a202c;transition:border-color .2s" onfocus="this.style.borderColor='#cc5500'" onblur="this.style.borderColor='#dde2ea'">
+        </div>
+      </div>
+      <div style="margin-bottom:6px">
+        <label style="font-size:11px;font-weight:700;color:#003366;display:block;margin-bottom:5px;letter-spacing:.3px">EMAIL</label>
+        <input id="dlg-email" type="email" placeholder="contact@company.com" style="width:100%;border:none;border-bottom:2px solid #dde2ea;padding:8px 4px;font-size:14px;font-family:inherit;outline:none;color:#1a202c;transition:border-color .2s" onfocus="this.style.borderColor='#cc5500'" onblur="this.style.borderColor='#dde2ea'">
+      </div>
+    </div>
+    <!-- Dialog Footer -->
+    <div style="padding:14px 28px 22px;display:flex;gap:10px;justify-content:flex-end">
+      <button onclick="submitDialog()" style="background:linear-gradient(135deg,#cc5500,#e06010);color:#fff;border:none;padding:11px 32px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.4px;box-shadow:0 4px 14px rgba(204,85,0,.3);transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">Proceed →</button>
+      <button onclick="submitDialog()" style="background:none;border:1px solid #dde2ea;color:#718096;padding:11px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.borderColor='#aaa'" onmouseout="this.style.borderColor='#dde2ea'">Skip</button>
+    </div>
+  </div>
+</div>
+
+<!-- COMPACT BANNER -->
+<div class="banner"><div class="banner-in">
+  <div class="banner-left">
+    <div class="badge">Pre-Installation Report</div>
+    <h1>Vollmer <span>QWD 760</span></h1>
+    <div class="sub">Wire Erosion Machine — Site Preparation & Requirements Document</div>
+  </div>
+  <div class="banner-right">
+    <strong>Document No:</strong> <span id="hdr-docno">PIR-QWD760-001</span><br>
+    <strong>Revision:</strong> Rev. A<br>
+    <strong>Date:</strong> <span id="hdr-date">______________</span><br>
+    <strong>Customer:</strong> <span id="hdr-company">______________</span><br>
+    <strong>Location:</strong> <span id="hdr-location">______________</span><br>
+    <strong>Contact:</strong> <span id="hdr-contact">______________</span>
+  </div>
+</div></div>
+
+<!-- TABS -->
+<div class="tabs"><div class="tabs-in">
+  <button class="tb active" onclick="sw('vo')">🎯 Visual Overview</button>
+  <button class="tb" onclick="sw('md')">Machine Details</button>
+  <button class="tb" onclick="sw('el')">Electrical</button>
+  <button class="tb" onclick="sw('fo')">Foundation</button>
+  <button class="tb" onclick="sw('sp')">Dimensions</button>
+  <button class="tb" onclick="sw('it')">IT & Computer</button>
+  <button class="tb" onclick="sw('th')">Tool Holder</button>
+  <button class="tb" onclick="sw('tr')">Transportation</button>
+  <button class="tb" onclick="sw('sa')">Safety</button>
+  <button class="tb" onclick="sw('ot')">Others</button>
+  <button class="tb" onclick="sw('ck')">Checklist</button>
+</div></div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="clb()"><div class="lb-x">&times;</div><img id="lbi" src="" alt=""></div>
+
+<div class="main">
+
+<!-- ===== VISUAL OVERVIEW ===== -->
+<div class="tc active" id="t-vo">
+<div class="st">System Connection Overview</div>
+<div class="sd">Animated diagram — all infrastructure connections flowing to the Vollmer QWD 760</div>
+<div class="vo-wrap">
+<svg class="vo-svg" viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <!-- Flow animations -->
+  <marker id="ae" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#c0392b"/></marker>
+  <marker id="aa" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#27ae60"/></marker>
+  <marker id="al" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#6c5ce7"/></marker>
+  <marker id="ag" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#d4a017"/></marker>
+</defs>
+
+<!-- Background grid -->
+<pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r=".5" fill="#d0d5de"/></pattern>
+<rect width="1000" height="560" fill="#f7f8fa"/><rect width="1000" height="560" fill="url(#grid)"/>
+
+<!-- ===== MACHINE (center) ===== -->
+<rect x="400" y="200" width="200" height="180" rx="10" fill="#fff" stroke="#003366" stroke-width="2.5"/>
+<rect x="405" y="205" width="190" height="100" rx="6" fill="#e8f0fe"/>
+<text x="500" y="250" text-anchor="middle" font-family="Source Sans 3" font-size="14" font-weight="700" fill="#003366">VOLLMER</text>
+<text x="500" y="272" text-anchor="middle" font-family="Source Sans 3" font-size="18" font-weight="800" fill="#003366">QWD 760</text>
+<text x="500" y="330" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#718096">4,500 kg · 6 kVA</text>
+<text x="500" y="348" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#718096">415V 3Ø · 10A</text>
+<text x="500" y="366" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#718096">Wire Erosion / EDM</text>
+
+<!-- ===== MAINS (top-left) ===== -->
+<rect x="40" y="30" width="130" height="80" rx="8" fill="#fff" stroke="#c0392b" stroke-width="1.5"/>
+<text x="105" y="58" text-anchor="middle" font-size="22">⚡</text>
+<text x="105" y="78" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#c0392b">Mains Supply</text>
+<text x="105" y="95" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">415V 3Ø+N+PE · 50Hz</text>
+
+<!-- ===== MCB ===== -->
+<rect x="40" y="155" width="130" height="70" rx="8" fill="#fff" stroke="#c0392b" stroke-width="1.5"/>
+<text x="105" y="180" text-anchor="middle" font-size="18">🔌</text>
+<text x="105" y="198" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#c0392b">MCB</text>
+<text x="105" y="213" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">3 × 16A Fuse</text>
+
+<!-- ===== UPS ===== -->
+<rect x="40" y="270" width="130" height="90" rx="8" fill="#fef7f6" stroke="#c0392b" stroke-width="1.5"/>
+<text x="105" y="298" text-anchor="middle" font-size="18">🔋</text>
+<text x="105" y="316" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#c0392b">Online UPS</text>
+<text x="105" y="331" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">3Ø · 10 KVA</text>
+<text x="105" y="346" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">415V Out · Unbalanced loads</text>
+
+<!-- ===== COMPRESSOR (top-right) ===== -->
+<rect x="770" y="30" width="110" height="75" rx="8" fill="#fff" stroke="#27ae60" stroke-width="1.5"/>
+<text x="825" y="57" text-anchor="middle" font-size="18">💨</text>
+<text x="825" y="75" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#1a6b3c">Compressor</text>
+<text x="825" y="92" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">≥ 6 bar · 10 l/min</text>
+
+<!-- ===== AIR DRYER ===== -->
+<rect x="900" y="30" width="90" height="75" rx="8" fill="#f0faf4" stroke="#27ae60" stroke-width="1.5"/>
+<text x="945" y="57" text-anchor="middle" font-size="18">❄️</text>
+<text x="945" y="75" text-anchor="middle" font-family="Source Sans 3" font-size="10" font-weight="700" fill="#1a6b3c">Air Dryer</text>
+<text x="945" y="90" text-anchor="middle" font-family="Source Sans 3" font-size="8" fill="#c0392b" font-weight="700">DRY AIR MUST</text>
+
+<!-- ===== COMPUTER (right) ===== -->
+<rect x="820" y="260" width="140" height="100" rx="8" fill="#fff" stroke="#6c5ce7" stroke-width="1.5"/>
+<text x="890" y="290" text-anchor="middle" font-size="22">🖥️</text>
+<text x="890" y="312" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#4c3da0">Computer + UPS</text>
+<text x="890" y="327" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">Cat7/Cat6 LAN</text>
+<text x="890" y="340" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">Max 20m · 2× 230V</text>
+
+<!-- ===== EARTH PIT (bottom-left) ===== -->
+<rect x="40" y="430" width="130" height="90" rx="8" fill="#fdfaf0" stroke="#d4a017" stroke-width="1.5"/>
+<text x="105" y="458" text-anchor="middle" font-size="22">🌍</text>
+<text x="105" y="480" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#8b6914">Earth Pit</text>
+<text x="105" y="495" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">Separate Dedicated</text>
+<text x="105" y="508" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#c0392b" font-weight="600">N-E &lt; 0.2V</text>
+
+<!-- ===== FIRE EXTINGUISHER (bottom-right) ===== -->
+<rect x="820" y="440" width="140" height="90" rx="8" fill="#fef7f6" stroke="#c0392b" stroke-width="1.5"/>
+<text x="890" y="470" text-anchor="middle" font-size="22">🧯</text>
+<text x="890" y="492" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#c0392b">Fire Extinguisher</text>
+<text x="890" y="507" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#c0392b" font-weight="600">⚠ Ships EMPTY</text>
+<text x="890" y="520" text-anchor="middle" font-family="Source Sans 3" font-size="8" fill="#718096">Must REFILL before use</text>
+
+<!-- ===== ANIMATED CONNECTIONS ===== -->
+
+<!-- Electrical: Mains → MCB (vertical red dashed) -->
+<line x1="105" y1="110" x2="105" y2="155" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="8,5">
+  <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1s" repeatCount="indefinite"/>
+</line>
+
+<!-- Electrical: MCB → UPS (vertical red dashed) -->
+<line x1="105" y1="225" x2="105" y2="270" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="8,5">
+  <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1s" repeatCount="indefinite"/>
+</line>
+
+<!-- Electrical: UPS → Machine (horizontal red dashed) -->
+<line x1="170" y1="315" x2="400" y2="315" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#ae)">
+  <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1.5s" repeatCount="indefinite"/>
+</line>
+<!-- Label -->
+<rect x="210" y="298" width="140" height="20" rx="4" fill="#fff" stroke="#c0392b" stroke-width="1"/>
+<text x="280" y="312" text-anchor="middle" font-family="Source Sans 3" font-size="9" font-weight="600" fill="#c0392b">415V 3Ø · 4×4mm² · Unbal.</text>
+
+<!-- Air: Compressor → Dryer (horizontal green dashed) -->
+<line x1="880" y1="67" x2="900" y2="67" stroke="#27ae60" stroke-width="2" stroke-dasharray="6,4">
+  <animate attributeName="stroke-dashoffset" from="0" to="-20" dur=".8s" repeatCount="indefinite"/>
+</line>
+
+<!-- Air: Dryer → Machine (vertical then horizontal green dashed) -->
+<polyline points="945,105 945,200 600,200" fill="none" stroke="#27ae60" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#aa)">
+  <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1.5s" repeatCount="indefinite"/>
+</polyline>
+<!-- Label -->
+<rect x="760" y="140" width="100" height="18" rx="4" fill="#fff" stroke="#27ae60" stroke-width="1"/>
+<text x="810" y="153" text-anchor="middle" font-family="Source Sans 3" font-size="9" font-weight="600" fill="#27ae60">≥ 6 bar Dry Air</text>
+
+<!-- LAN: Machine ↔ Computer (bidirectional purple dashed from machine edge) -->
+<!-- Arrow: Machine → Computer (top line) -->
+<line x1="600" y1="280" x2="820" y2="280" stroke="#6c5ce7" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#al)">
+  <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1s" repeatCount="indefinite"/>
+</line>
+<!-- Arrow: Computer → Machine (bottom line) -->
+<marker id="al2" markerWidth="6" markerHeight="4" refX="1" refY="2" orient="auto"><polygon points="6 0, 0 2, 6 4" fill="#6c5ce7"/></marker>
+<line x1="820" y1="300" x2="600" y2="300" stroke="#6c5ce7" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#al2)">
+  <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1s" repeatCount="indefinite"/>
+</line>
+<!-- Label -->
+<rect x="675" y="283" width="70" height="16" rx="3" fill="#fff" stroke="#6c5ce7" stroke-width="1"/>
+<text x="710" y="294" text-anchor="middle" font-family="Source Sans 3" font-size="8" font-weight="600" fill="#6c5ce7">Cat7/Cat6 LAN</text>
+
+<!-- Earth: Earth Pit → Machine (gold dashed line 1) -->
+<polyline points="170,475 300,475 300,380 400,380" fill="none" stroke="#d4a017" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#ag)">
+  <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1.5s" repeatCount="indefinite"/>
+</polyline>
+<!-- Earth: Earth Pit → UPS (gold dashed line 2) -->
+<polyline points="170,460 230,460 230,360 105,360" fill="none" stroke="#d4a017" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#ag)">
+  <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1.5s" repeatCount="indefinite"/>
+</polyline>
+<!-- Label -->
+<rect x="200" y="478" width="100" height="18" rx="4" fill="#fff" stroke="#d4a017" stroke-width="1"/>
+<text x="250" y="491" text-anchor="middle" font-family="Source Sans 3" font-size="9" font-weight="600" fill="#d4a017">1 × 4mm² Earth</text>
+
+<!-- Fire connection (red dashed to machine) -->
+<line x1="820" y1="480" x2="600" y2="380" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,6" opacity=".4">
+  <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="2s" repeatCount="indefinite"/>
+</line>
+
+</svg>
+<div class="vo-legend">
+  <div class="vo-leg"><div class="vo-dot" style="background:#c0392b"></div>Electrical (415V 3Ø)</div>
+  <div class="vo-leg"><div class="vo-dot" style="background:#27ae60"></div>Compressed Air</div>
+  <div class="vo-leg"><div class="vo-dot" style="background:#6c5ce7"></div>LAN / IT</div>
+  <div class="vo-leg"><div class="vo-dot" style="background:#d4a017"></div>Earthing</div>
+  <div class="vo-leg"><div class="vo-dot" style="background:#c0392b"></div>Fire Safety</div>
+</div>
+</div>
+
+<!-- Installation Steps -->
+<div class="card">
+<div class="ct"><div class="ic">📋</div>Installation Sequence — Step by Step</div>
+<div class="step"><div class="sn">1</div><div class="sc"><h4>Site Preparation</h4><p>Level floor (26 N/cm²), room temp 15–30°C, min 60 m³, door ≥ 2.5m</p></div></div>
+<div class="step"><div class="sn">2</div><div class="sc"><h4>Electrical Infrastructure</h4><p>MCB (16A), Online 3Ø UPS (10KVA), separate earth pit (2 cables), N-E &lt; 0.2V</p></div></div>
+<div class="step"><div class="sn">3</div><div class="sc"><h4>Compressed Air</h4><p>Compressor (≥ 6 bar) + air dryer. Clean dry air to machine</p></div></div>
+<div class="step"><div class="sn">4</div><div class="sc"><h4>Machine Delivery & Positioning</h4><p>Forklift/crane (~4,500 kg). Unpack, position, level with water level</p></div></div>
+<div class="step"><div class="sn">5</div><div class="sc"><h4>Electrical Connection</h4><p>415V via UPS, check motor rotation at coolant pump, verify phases</p></div></div>
+<div class="step"><div class="sn">6</div><div class="sc"><h4>IT & Network</h4><p>Computer + UPS, Cat7/Cat6 LAN cable (max 20m), 2× 230V plugs</p></div></div>
+<div class="step"><div class="sn">7</div><div class="sc"><h4>Coolant & Lubrication</h4><p>Fill dielectric (140L), central lubrication (3L)</p></div></div>
+<div class="step"><div class="sn">8</div><div class="sc"><h4>Fire Extinguisher</h4><p>REFILL (shipped empty), reconnect valve & hose, CO₂ signs</p></div></div>
+<div class="step"><div class="sn">9</div><div class="sc"><h4>Eroding Wire & Tooling</h4><p>Load 0.25mm coated wire, arrange tool holder adaptions</p></div></div>
+<div class="step"><div class="sn">10</div><div class="sc"><h4>Commissioning</h4><p>Power on, diagnostics, calibrate, test erosion cycle</p></div></div>
+</div>
+</div>
+
+<!-- OVERVIEW TAB REMOVED -->
+
+<!-- ===== MACHINE DETAILS ===== -->
+<div class="tc" id="t-md">
+<div class="st">Machine Details</div>
+<div class="sd">Vollmer QWD 760 — Full technical specifications and capabilities</div>
+
+<div class="emergency">
+  <strong>🧯 URGENT — Fire Extinguisher (FB 703) Ships EMPTY</strong>
+  <p>Machine fire extinguisher bottle is shipped EMPTY. Valve and hose disconnected for transport. Must be REFILLED and reconnected BEFORE commissioning. Machine CANNOT start without it.</p>
+</div>
+
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">📋</div>General Specifications</div>
+    <table class="sp">
+      <tr><td>Machine Model</td><td>Vollmer QWD 760</td></tr>
+      <tr><td>Machine Type</td><td>CNC Wire Erosion / EDM</td></tr>
+      <tr><td>Purpose</td><td>Machining PCD-tipped cutting tools</td></tr>
+      <tr><td>Control System</td><td>CNC (Vollmer proprietary)</td></tr>
+      <tr><td>Axes</td><td>5-Axis simultaneous</td></tr>
+      <tr><td>Weight (net)</td><td>4,500 kg</td></tr>
+      <tr><td>Weight (gross)</td><td>4,600 kg</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">📦</div>Machine Dimensions</div>
+    <table class="sp">
+      <tr><td>Length</td><td>2,350 mm</td></tr>
+      <tr><td>Width</td><td>2,100 mm</td></tr>
+      <tr><td>Height</td><td>2,200 mm</td></tr>
+      <tr><td>Transport Length</td><td>2,600 mm</td></tr>
+      <tr><td>Transport Width</td><td>2,300 mm</td></tr>
+      <tr><td>Transport Height</td><td>2,400 mm</td></tr>
+      <tr><td>Crate / Gross Weight</td><td>4,600 kg</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">⚡</div>Power & Utilities</div>
+    <table class="sp">
+      <tr><td>Supply Voltage</td><td>415V AC ±1% <span class="badge badge-r">CONSTANT</span></td></tr>
+      <tr><td>Phase</td><td>3-Phase + Neutral + Earth</td></tr>
+      <tr><td>Frequency</td><td>50 Hz</td></tr>
+      <tr><td>Connected Load</td><td>6 kVA</td></tr>
+      <tr><td>Nominal Current</td><td>10 A</td></tr>
+      <tr><td>Fuse Protection</td><td>3 × 16 A MCB</td></tr>
+      <tr><td>Cable Size</td><td>5 × 4 mm²</td></tr>
+      <tr><td>N-E Voltage</td><td>&lt; 0.2V <span class="badge badge-r">MANDATORY</span></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">💨</div>Air & Cooling</div>
+    <table class="sp">
+      <tr><td>Air Pressure</td><td>≥ 6 bar (sustained)</td></tr>
+      <tr><td>Air Consumption</td><td>10 l/min</td></tr>
+      <tr><td>Air Quality</td><td>Dry, oil-free <span class="badge badge-r">MANDATORY</span></td></tr>
+      <tr><td>Air Dryer</td><td>Required — refrigerant type</td></tr>
+      <tr><td>Dielectric Fluid</td><td>140 litres (tank capacity)</td></tr>
+      <tr><td>Fluid Type</td><td>Vollmer approved dielectric</td></tr>
+      <tr><td>Lubrication</td><td>3L central lubrication oil</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">🔩</div>Shank-Type Workpieces</div>
+    <table class="sp">
+      <tr><td>Outside Diameter</td><td>≤ 250 mm</td></tr>
+      <tr><td>Length of Cutting Edge</td><td>≤ 260 mm</td></tr>
+      <tr><td>Total Length</td><td>≤ 500 mm</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">⚙️</div>Discoid Workpieces</div>
+    <table class="sp">
+      <tr><td>Outside Diameter</td><td>≤ 250 mm</td></tr>
+      <tr><td>Length of Cutting Edge</td><td>≤ 260 mm</td></tr>
+      <tr><td>Tangential Clearance</td><td>≤ 6°</td></tr>
+      <tr><td>Radial Clearance</td><td>-10° to 6°</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">📐</div>Profiled Workpieces</div>
+    <table class="sp">
+      <tr><td>Outside Diameter</td><td>≤ 250 mm</td></tr>
+      <tr><td>Length of Cutting Edge</td><td>≤ 260 mm</td></tr>
+      <tr><td>Total Length</td><td>≤ 500 mm</td></tr>
+      <tr><td>Clearance Angle</td><td>≤ 30°</td></tr>
+      <tr><td>Radial Clearance</td><td>≤ 30°</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">🌡️</div>Environmental Requirements</div>
+    <table class="sp">
+      <tr><td>Ambient Temperature</td><td>15°C – 30°C</td></tr>
+      <tr><td>Optimal Temperature</td><td>20°C ± 1°C</td></tr>
+      <tr><td>Humidity</td><td>Non-condensing</td></tr>
+      <tr><td>Room Volume</td><td>≥ 60 m³ (CO₂ safety)</td></tr>
+      <tr><td>Floor Load Capacity</td><td>≥ 26 N/cm²</td></tr>
+      <tr><td>Floor Type</td><td>Level, anti-slip, rubber damping sheets</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ct"><div class="ic">🪛</div>Eroding Wire</div>
+  <table class="sp">
+    <tr><td>Wire Diameter</td><td>0.25 mm</td></tr>
+    <tr><td>Wire Type</td><td>Coated brass wire</td></tr>
+    <tr><td>Process</td><td>Wire EDM — spark erosion through dielectric fluid</td></tr>
+    <tr><td>Application</td><td>PCD (Polycrystalline Diamond) tipped tools — drills, milling cutters, reamers, saw blades</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ===== ELECTRICAL ===== -->
+<div class="tc" id="t-el">
+<div class="st">Electrical Requirements</div>
+<div class="sd">Complete power supply specifications</div>
+<div class="hb danger"><strong>⚡ Critical — Neutral-Earth Voltage must be below 0.2V. Must be verified before power-on.</strong><p>Machine requires 415V ±1% constant supply.</p></div>
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">⚡</div>Machine Power Supply</div>
+    <table class="sp">
+      <tr><td>Input Voltage</td><td>415V AC ±1% <span class="badge badge-r">CONSTANT</span></td></tr>
+      <tr><td>Phase</td><td>3-Phase + Neutral + Earth</td></tr>
+      <tr><td>Frequency</td><td>50 Hz</td></tr>
+      <tr><td>Connected Load</td><td>6 kVA</td></tr>
+      <tr><td>Nominal Current</td><td>10 A</td></tr>
+      <tr><td>Fuse Protection</td><td>3 × 16 A</td></tr>
+      <tr><td>Cable</td><td>5 × 4 mm²</td></tr>
+      <tr><td>N-E Voltage</td><td>&lt; 0.2V <span class="badge badge-r">MANDATORY</span></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">🔋</div>UPS & Stabilizer</div>
+    <table class="sp">
+      <tr><td>Type</td><td>Online 3Ø UPS with Stabilizer</td></tr>
+      <tr><td>Capacity</td><td>10 KVA</td></tr>
+      <tr><td>MCB Rating</td><td>16 A</td></tr>
+      <tr><td>Output Voltage</td><td>415V, 50 Hz</td></tr>
+      <tr><td>Unbalanced Loads</td><td>Must support <span class="badge badge-r">MUST</span></td></tr>
+      <tr><td>Isolation Transformer</td><td>Recommended</td></tr>
+    </table>
+  </div>
+</div>
+<div class="card">
+  <div class="ct"><div class="ic">🌍</div>Earthing / Grounding</div>
+  <table class="sp">
+    <tr><td>Earthing</td><td>Separate dedicated Earth Pit <span class="badge badge-r">MANDATORY</span></td></tr>
+    <tr><td>Earth Cables</td><td>2 cables (1 → stabilizer, 1 → machine)</td></tr>
+    <tr><td>Cable Size</td><td>4 mm²</td></tr>
+    <tr><td>N-E Voltage</td><td>&lt; 0.2V (must be verified)</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ===== FOUNDATION ===== -->
+<div class="tc" id="t-fo">
+<div class="st">Foundation & Floor</div>
+<div class="sd">Floor, environmental conditions, and room requirements</div>
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">🏗️</div>Floor Requirements</div>
+    <table class="sp">
+      <tr><td>Floor Type</td><td>Level, anti-slip, safe to walk on</td></tr>
+      <tr><td>Surface Pressure</td><td>26 N/cm²</td></tr>
+      <tr><td>Machine Weight</td><td>4,500 kg (net)</td></tr>
+      <tr><td>Levelling</td><td>Water level — horizontal both directions</td></tr>
+      <tr><td>Rubber Sheets</td><td>Place on stiffened rubber sheets</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">🌡️</div>Environmental Conditions</div>
+    <table class="sp">
+      <tr><td>Operating Temp</td><td>15–30°C <span class="badge badge-r">MUST</span></td></tr>
+      <tr><td>Optimal Temp</td><td>20 ± 1°C (constant)</td></tr>
+      <tr><td>Temp Fluctuation/hr</td><td>≤ 1°C</td></tr>
+      <tr><td>Temp Fluctuation/day</td><td>≤ 5°C</td></tr>
+      <tr><td>Max Humidity</td><td>≤ 80%</td></tr>
+      <tr><td>Vibrations (5Hz)</td><td>≤ 5 µm (peak-peak)</td></tr>
+      <tr><td>Vibrations (10Hz)</td><td>≤ 10 µm (peak-peak)</td></tr>
+      <tr><td>Min Room Size</td><td>≥ 60 m³</td></tr>
+      <tr><td>Environment</td><td>Air conditioned room <span class="badge badge-r">MUST</span></td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ===== DIMENSIONS ===== -->
+<div class="tc" id="t-sp">
+<div class="st">Space & Dimensions</div>
+<div class="sd">Machine dimensions, transport weights, access</div>
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">📐</div>Machine Dimensions</div>
+    <table class="sp">
+      <tr><td>Length</td><td>2,535 mm</td></tr>
+      <tr><td>Width</td><td>1,715 mm</td></tr>
+      <tr><td>Width (w/ attachments)</td><td>2,200 mm</td></tr>
+      <tr><td>Height</td><td>2,220 mm</td></tr>
+      <tr><td>Height (w/ attachments)</td><td>2,505 mm</td></tr>
+      <tr><td>Overall (L×W×H)</td><td>2,715 × 2,301 × 2,505 mm</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">📦</div>Transport & Weight</div>
+    <table class="sp">
+      <tr><td>Net Weight</td><td>4,500 kg</td></tr>
+      <tr><td>Gross Weight</td><td>4,600 kg</td></tr>
+      <tr><td>Shipment (land)</td><td>5,100 kg</td></tr>
+      <tr><td>Shipment (sea)</td><td>5,200 kg</td></tr>
+    </table>
+  </div>
+</div>
+<div class="card">
+  <div class="ct"><div class="ic">🚪</div>Access & Clearance</div>
+  <table class="sp">
+    <tr><td>Door Width/Height</td><td>≥ 2,500 mm</td></tr>
+    <tr><td>Service Clearance</td><td>≥ 1,000 mm all sides</td></tr>
+    <tr><td>Forklift/Crane</td><td>Required — ~4,500 kg</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ===== IT & COMPUTER ===== -->
+<div class="tc" id="t-it">
+<div class="st">IT & Computer</div>
+<div class="sd">Network, computer workstation, and software requirements</div>
+<div class="hb info"><strong>🔗 LAN: Cat7 or Cat6 cable — Maximum 20 metres</strong><p>Direct connection between machine and computer required.</p></div>
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">🖥️</div>Computer Workstation</div>
+    <table class="sp">
+      <tr><td>Computer Table</td><td>Required <span class="badge badge-r">REQUIRED</span></td></tr>
+      <tr><td>Computer UPS</td><td>Required (separate from machine)</td></tr>
+      <tr><td>Plug Points</td><td>2 × Single Phase 230V</td></tr>
+      <tr><td>Plug Standard</td><td>European Standard</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">🌐</div>Network / LAN</div>
+    <table class="sp">
+      <tr><td>LAN Cable</td><td>Cat7 or Cat6 <span class="badge badge-r">ONLY</span></td></tr>
+      <tr><td>Cable Type</td><td>Cross-connect only</td></tr>
+      <tr><td>Max Length</td><td>20 metres</td></tr>
+      <tr><td>Connection</td><td>Machine ↔ Computer (direct)</td></tr>
+    </table>
+  </div>
+</div>
+<div class="card">
+  <div class="ct"><div class="ic">💻</div>Required Software</div>
+  <table class="sp">
+    <tr><td>AutoCAD</td><td>For tool drawings & contour design</td></tr>
+    <tr><td>Path Management</td><td>Tool path management software</td></tr>
+    <tr><td>ExProg</td><td>Vollmer erosion programming software</td></tr>
+  </table>
+</div>
+<div class="hb warn">
+  <strong>⚠ Software Compatibility Notice</strong>
+  <p>The machine control software is a legacy system compatible with <strong>Windows XP</strong> and <strong>Windows 7</strong> only. It does <strong>NOT support Windows 10 or Windows 11</strong>. The customer must ensure a compatible operating system is installed on the dedicated machine PC. Please plan accordingly, as modern PCs may require OS downgrade or a dedicated legacy workstation.</p>
+</div>
+</div>
+
+<!-- ===== TOOL HOLDER ===== -->
+<div class="tc" id="t-th">
+<div class="st">Tool Holder Adaptions</div>
+<div class="sd">Machine standard and available adaptions</div>
+<div class="card">
+  <div class="ct"><div class="ic">🔧</div>Standard Tool Holder</div>
+  <table class="sp"><tr><td>Standard A-axis Holder</td><td>SK50 <span class="badge badge-i">INCLUDED</span></td></tr></table>
+</div>
+<div class="card">
+  <div class="ct"><div class="ic">⚙️</div>Available Adaptions (Customer to Arrange)</div>
+  <table class="sp">
+    <tr><td>SK40 Adaption</td><td>Available — Customer to arrange</td></tr>
+    <tr><td>HSK63 Adaption</td><td>Available — Customer to arrange</td></tr>
+    <tr><td>Between Centres</td><td>Available — Customer to arrange</td></tr>
+  </table>
+  <div class="hb warn" style="margin-top:14px">
+    <strong>📌 Between Centres — Customer Requirement</strong>
+    <p>For between-centres machining, customer must arrange both <strong>A-axis centre</strong> and <strong>tailstock centre</strong>. These are NOT included in the standard order.</p>
+  </div>
+</div>
+<div class="hb info"><strong>ℹ️ Send your tool drawings to Vollmer service team for early preparation of adaptions before commissioning.</strong></div>
+</div>
+
+<!-- ===== TRANSPORTATION ===== -->
+<div class="tc" id="t-tr">
+<div class="st">Transportation & Installation</div>
+<div class="sd">Packaging, lifting, transport, and positioning instructions</div>
+
+<!-- Animation scene -->
+<div class="scene">
+  <div class="sc-sun"></div>
+  <div class="sc-cloud sc-c1"></div><div class="sc-cloud sc-c2"></div><div class="sc-cloud sc-c3"></div>
+  <div class="sc-fchimney"></div>
+  <div class="sc-smoke"></div><div class="sc-smoke"></div><div class="sc-smoke"></div>
+  <div class="sc-factory"></div>
+  <!-- Hydra Crane -->
+  <div class="hcrane">
+    <div class="hc-base"></div>
+    <div class="hc-turret"></div>
+    <div class="hc-boom">
+      <div class="hc-sling hc-sling-l"></div>
+      <div class="hc-sling hc-sling-r"></div>
+      <div class="hc-cable"><div class="hc-hook"></div></div>
+    </div>
+  </div>
+  <!-- Lifted wooden box (crane carries this) -->
+  <div class="wb-lift"></div>
+  <!-- Forklift -->
+  <div class="forklift">
+    <div class="fk-body"></div>
+    <div class="fk-roof"></div>
+    <div class="fk-mast"></div>
+    <div class="fk-fork"></div>
+    <div class="fk-wheel fk-w1"></div>
+    <div class="fk-wheel fk-w2"></div>
+  </div>
+  <!-- Open Lorry with Wooden Box -->
+  <div class="lorry">
+    <div class="lorry-cab"></div>
+    <div class="lorry-bed"></div>
+    <div class="lorry-rail lr-l"></div><div class="lorry-rail lr-m"></div><div class="lorry-rail lr-r"></div>
+    <div class="lorry-side"></div>
+    <div class="wb-truck"><div class="wb-grain"></div><div class="wb-nail" style="top:3px;left:5px"></div><div class="wb-nail" style="top:3px;right:5px"></div><div class="wb-nail" style="bottom:3px;left:5px"></div><div class="wb-nail" style="bottom:3px;right:5px"></div></div>
+    <div class="lw lw1"></div><div class="lw lw2"></div><div class="lw lw3"></div><div class="lw lw4"></div>
+  </div>
+  <div class="road"></div>
+  <div class="scene-ground"></div>
+</div>
+
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">📦</div>Packaging & Delivery</div>
+    <table class="sp">
+      <tr><td>Shipping</td><td>Machine shipped in one piece</td></tr>
+      <tr><td>Packaging</td><td>Per VDMA directives (wooden crate)</td></tr>
+      <tr><td>Net Weight</td><td>4,500 kg</td></tr>
+      <tr><td>Land Shipment</td><td>5,100 kg (incl. packing)</td></tr>
+      <tr><td>Sea Shipment</td><td>5,200 kg (incl. packing)</td></tr>
+    </table>
+    <div class="hb danger" style="margin-top:12px"><strong>⚠ Wooden crate is NOT suitable for crane transport</strong><p>Remove packaging first, then lift machine by crane.</p></div>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">🏗️</div>Crane Lifting</div>
+    <table class="sp">
+      <tr><td>Sling 1</td><td>1× sling ≥ 3.5 metres</td></tr>
+      <tr><td>Sling 2 & 3</td><td>2× slings ≥ 3 metres each</td></tr>
+      <tr><td>Centre of Gravity</td><td>Lift at machine centre <span class="badge badge-r">CRITICAL</span></td></tr>
+      <tr><td>Protection</td><td>Wooden blocks/pads under cables if touching housing</td></tr>
+      <tr><td>Position</td><td>Raise more or less horizontally</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">🚛</div>Forklift Transport</div>
+    <table class="sp">
+      <tr><td>Capacity</td><td>Sufficient for ~5,100 kg</td></tr>
+      <tr><td>Forks</td><td>Only at marked points (see centre of gravity mark)</td></tr>
+      <tr><td>Fork Lift Pockets</td><td>If machine stand equipped, place directly on these</td></tr>
+      <tr><td>Transport</td><td>Lift slightly, move with EXTREME caution</td></tr>
+      <tr><td>Vibrations</td><td>Avoid jerking and strong vibrations</td></tr>
+    </table>
+    <div class="hb warn" style="margin-top:10px"><strong>⚠ Top-heavy machine — Secure with rope/belt to prevent tipping</strong></div>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">📍</div>Positioning & Levelling</div>
+    <table class="sp">
+      <tr><td>Floor</td><td>STRAIGHT LEVELLED — no inclination</td></tr>
+      <tr><td>Rubber Sheets</td><td>Place on stiffened rubber sheets</td></tr>
+      <tr><td>Levelling</td><td>Water level — horizontal in L & T directions</td></tr>
+      <tr><td>Transport Locks</td><td>Do NOT remove until final destination <span class="badge badge-r">IMPORTANT</span></td></tr>
+      <tr><td>Coolant Tank</td><td>Transport separately, reassemble at site</td></tr>
+    </table>
+  </div>
+</div>
+<div class="card">
+  <div class="ct"><div class="ic">📋</div>Post-Positioning Assembly</div>
+  <table class="sp">
+    <tr><td>Coolant Tank</td><td>Remove from mounting compartment, reassemble, plug electrical connectors, attach quick coupling</td></tr>
+    <tr><td>Extraction Unit</td><td>Lift onto machine roof (one possible way), connect electrical per circuit diagram</td></tr>
+    <tr><td>Pressure Discharge Flap</td><td>Connect trip switch to deflagration flap. Test by hand while machine is ON — machine should shut down</td></tr>
+    <tr><td>Rust Protection</td><td>Remove with soft cloth + petroleum. Grease all unpainted parts after. ~3 months shelf life</td></tr>
+  </table>
+</div>
+<div class="hb info"><strong>ℹ️ Refer to "Technical Drawings" tab for detailed crane lifting diagrams and transport plan.</strong></div>
+</div>
+
+<!-- ===== SAFETY ===== -->
+<div class="tc" id="t-sa">
+<div class="st">Safety Requirements</div>
+<div class="sd">Fire safety, CO₂, pacemaker warning, room labelling</div>
+<div class="emergency">
+  <strong>🧯 URGENT — Fire Extinguisher (FB 703) Ships EMPTY</strong>
+  <p>Customer MUST: (1) Reconnect valve, (2) Connect hose, (3) Refill tank, (4) Switch on fire-extinguisher control. Machine CANNOT operate without it.</p>
+</div>
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">⚠️</div>Room Labelling (Mandatory)</div>
+    <p style="font-size:11px;color:var(--vgray);margin-bottom:8px">Must be fitted inside AND outside of all doors:</p>
+    <div style="background:#fff3cd;border:2px solid #ffc107;padding:12px;border-radius:6px;text-align:center;font-size:12px;font-weight:600">
+      ⚠️ Warning: Danger Zone<br><br>
+      <span style="font-size:11px;font-weight:400">CO₂ Fire Extinguisher<br>In case of fire alarm or loss of CO₂<br><strong>LEAVE THE ROOM IMMEDIATELY!</strong></span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">❤️</div>Hazard Warnings</div>
+    <table class="sp">
+      <tr><td>Pacemakers</td><td>NOT within 3m during operation <span class="badge badge-r">DANGER</span></td></tr>
+      <tr><td>Ventilation</td><td>Prevent hazardous gases/vapours</td></tr>
+      <tr><td>Dielectric Fluid</td><td>Avoid skin contact, use gloves</td></tr>
+      <tr><td>Laser Class</td><td>Class 2</td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ===== OTHERS ===== -->
+<div class="tc" id="t-ot">
+<div class="st">Others</div>
+<div class="sd">Compressed air, coolant, lubrication, eroding wires</div>
+<div class="hb danger"><strong>💨 DRY AIR is Mandatory — Air dryer MUST be installed. Moisture will damage the pneumatic system.</strong></div>
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">💨</div>Compressed Air</div>
+    <table class="sp">
+      <tr><td>External Supply</td><td>≥ 6 bar <span class="badge badge-r">MUST</span></td></tr>
+      <tr><td>Operating Pressure</td><td>≥ 5 bar</td></tr>
+      <tr><td>Consumption</td><td>10 l/min</td></tr>
+      <tr><td>Air Quality</td><td>DRY Air <span class="badge badge-r">MANDATORY</span></td></tr>
+      <tr><td>Air Dryer</td><td>Refrigerant or desiccant type</td></tr>
+      <tr><td>Piping</td><td>Clean, oil-free to machine</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">💧</div>Coolant / Dielectric</div>
+    <table class="sp">
+      <tr><td>Tank Capacity</td><td>140 litres</td></tr>
+      <tr><td>Pump Output</td><td>60 l/min</td></tr>
+    </table>
+    <div style="margin-top:8px;padding:6px;background:var(--vbg2);border-radius:4px;font-size:10px;color:var(--vgray)">⚠ Never mix dielectric fluids of different makes. Remove anti-corrosion agent before filling.</div>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">🛢️</div>Lubrication</div>
+    <table class="sp"><tr><td>Central Lube Tank</td><td>3 litres</td></tr></table>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">🔩</div>Eroding Wires</div>
+    <table class="sp">
+      <tr><td>Recommended Wire</td><td>0.25 mm dia — Coated wire</td></tr>
+      <tr><td>Wire Range</td><td>0.15 – 0.3 mm</td></tr>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- ===== CHECKLIST ===== -->
+<div class="tc" id="t-ck">
+<div class="st">Pre-Installation Checklist</div>
+<div class="sd">Complete all items before machine delivery</div>
+<div class="g2">
+  <div class="card">
+    <div class="ct"><div class="ic">⚡</div>Electrical</div>
+    <ul class="cl">
+      <li><div class="cb"></div><div class="cl-l"><strong>415V 3Ø + N + PE supply</strong><span>Verified & tested</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>MCB 16A installed</strong><span>Dedicated for machine</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Online 3Ø UPS 10KVA</strong><span>415V output, unbalanced load support</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Separate earth pit + 2 cables</strong><span>1 → stabilizer, 1 → machine</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>N-E voltage &lt; 0.2V verified</strong><span>Measured & documented</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>2× European plugs (230V)</strong><span>For computer workstation</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Computer UPS</strong><span>Separate from machine UPS</span></div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">💨</div>Air, Coolant & Consumables</div>
+    <ul class="cl">
+      <li><div class="cb"></div><div class="cl-l"><strong>Compressor ≥ 6 bar</strong><span>Sustained, 10 l/min</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Air dryer installed</strong><span>Dry air mandatory</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Piping to machine</strong><span>Clean, oil-free</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Dielectric fluid</strong><span>140L for tank</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Eroding wire</strong><span>0.25mm coated</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Lubrication</strong><span>3L central lube</span></div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">🏗️</div>Foundation & Access</div>
+    <ul class="cl">
+      <li><div class="cb"></div><div class="cl-l"><strong>Floor leveled & verified</strong><span>26 N/cm², anti-slip, rubber sheets</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Room temp 15–30°C</strong><span>Air conditioned, 20±1°C optimal</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Room size ≥ 60 m³</strong><span>Per CO₂ requirements</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Door ≥ 2.5m</strong><span>Width & height for entry</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Service clearance ≥ 1m</strong><span>All sides</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Forklift/crane available</strong><span>~4,500 kg, slings as specified</span></div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="ct"><div class="ic">🖥️</div>IT, Safety & Tooling</div>
+    <ul class="cl">
+      <li><div class="cb"></div><div class="cl-l"><strong>Cat7/Cat6 LAN cable</strong><span>Max 20m</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Computer + table</strong><span>Win XP/7 only, with UPS</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Software installed</strong><span>AutoCAD, Path Mgmt, ExProg</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Fire extinguisher refilled</strong><span>URGENT — FB 703</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>CO₂ warning signs</strong><span>Inside & outside all doors</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Tool holding adaptions</strong><span>SK40/HSK63/Between Centres</span></div></li>
+    </ul>
+  </div>
+</div>
+<div style="margin-top:20px;background:var(--vcard);border:1px solid var(--vborder);border-radius:8px;padding:20px;box-shadow:var(--sh)">
+  <p style="font-size:13px;color:var(--vgrayl);font-weight:600;margin-bottom:14px">✅ Verified By (Customer):</p>
+  <div class="g2" style="margin-bottom:12px">
+    <div>
+      <label style="font-size:11px;color:var(--vgrayll);display:block;margin-bottom:4px">Company Name</label>
+      <input type="text" id="ck-company" placeholder="Company name..." style="width:100%;border:none;border-bottom:2px solid var(--vborder);padding:8px 4px;font-size:14px;font-family:inherit;outline:none;background:transparent;color:#1a202c">
+    </div>
+    <div>
+      <label style="font-size:11px;color:var(--vgrayll);display:block;margin-bottom:4px">Location</label>
+      <input type="text" id="ck-location" placeholder="City / Location..." style="width:100%;border:none;border-bottom:2px solid var(--vborder);padding:8px 4px;font-size:14px;font-family:inherit;outline:none;background:transparent;color:#1a202c">
+    </div>
+  </div>
+  <div class="g2">
+    <div>
+      <label style="font-size:11px;color:var(--vgrayll);display:block;margin-bottom:4px">Contact Person</label>
+      <input type="text" id="verifiedName" placeholder="Enter full name..." style="width:100%;border:none;border-bottom:2px solid var(--vborder);padding:8px 4px;font-size:14px;font-family:inherit;outline:none;background:transparent;color:#1a202c">
+    </div>
+    <div>
+      <label style="font-size:11px;color:var(--vgrayll);display:block;margin-bottom:4px">Date</label>
+      <input type="text" id="verifiedDate" placeholder="DD/MM/YYYY" style="width:100%;border:none;border-bottom:2px solid var(--vborder);padding:8px 4px;font-size:14px;font-family:inherit;outline:none;background:transparent;color:#1a202c">
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:20px" id="exportWrap">
+    <button onclick="exportPDF()" style="background:linear-gradient(135deg,var(--vblue),var(--vblue2));color:#fff;border:none;padding:13px 36px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.5px;box-shadow:0 4px 14px rgba(0,51,102,.25);transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">🖨️ Print / Save as PDF</button>
+  </div>
+</div>
+</div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-line"></div>
+  Vollmer QWD 760 — Pre-Installation Report | Confidential<br>
+  <span style="margin-top:2px;display:inline-block">All requirements must be completed and verified before delivery and installation.</span>
+</div>
+
+<script>
+// Welcome Dialog
+function submitDialog(){
+  var company  = document.getElementById('dlg-company').value.trim();
+  var location = document.getElementById('dlg-location').value.trim();
+  var contact  = document.getElementById('dlg-contact').value.trim();
+
+  // Update banner header
+  var hdrCompany  = document.getElementById('hdr-company');
+  var hdrLocation = document.getElementById('hdr-location');
+  var hdrContact  = document.getElementById('hdr-contact');
+  var hdrDate     = document.getElementById('hdr-date');
+
+  // Auto-shrink font for long company names
+  if(company){
+    hdrCompany.textContent = company;
+    var len = company.length;
+    hdrCompany.style.fontSize = len > 30 ? '9px' : len > 20 ? '10px' : len > 14 ? '11px' : '';
+  }
+  if(location) hdrLocation.textContent = location;
+  if(contact)  hdrContact.textContent  = contact;
+
+  // Set date in banner
+  var d=new Date(), dd=String(d.getDate()).padStart(2,'0'), mm=String(d.getMonth()+1).padStart(2,'0'), yyyy=d.getFullYear();
+  hdrDate.textContent = dd+'/'+mm+'/'+yyyy;
+
+  // Pre-fill checklist sign-off fields (editable by user)
+  if(company)  document.getElementById('ck-company').value  = company;
+  if(location) document.getElementById('ck-location').value = location;
+  if(contact)  document.getElementById('verifiedName').value = contact;
+
+  // Hide dialog
+  document.getElementById('welcomeOverlay').style.display = 'none';
+}
+
+// Allow Enter key to submit dialog
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Enter' && document.getElementById('welcomeOverlay').style.display !== 'none'){
+    submitDialog();
+  }
+});
+
+
+function sw(id){
+  document.querySelectorAll('.tc').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(e=>e.classList.remove('active'));
+  document.getElementById('t-'+id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({top:document.querySelector('.main').offsetTop-40,behavior:'smooth'});
+}
+function olb(s){document.getElementById('lbi').src=s;document.getElementById('lb').classList.add('active')}
+function clb(){document.getElementById('lb').classList.remove('active')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')clb()});
+
+// Clickable checkboxes
+document.querySelectorAll('.cb').forEach(cb=>{
+  cb.style.cursor='pointer';
+  cb.addEventListener('click',function(){this.classList.toggle('checked')});
+});
+
+// ── Doc Number Management ──
+function getDocNumber(){
+  var n = parseInt(localStorage.getItem('vollmer_doc_seq') || '0');
+  return n;
+}
+function formatDocNo(n){
+  return 'PIR-QWD760-' + String(n).padStart(3,'0');
+}
+function incrementDocNumber(){
+  var n = getDocNumber() + 1;
+  localStorage.setItem('vollmer_doc_seq', n);
+  return n;
+}
+// Show current (next) doc number on page load
+(function(){
+  var next = getDocNumber() + 1;
+  var el = document.getElementById('hdr-docno');
+  if(el) el.textContent = formatDocNo(next);
+})();
+
+// Auto-fill date
+(function(){
+  var d=new Date(),dd=String(d.getDate()).padStart(2,'0'),mm=String(d.getMonth()+1).padStart(2,'0'),yyyy=d.getFullYear();
+  var el=document.getElementById('verifiedDate');
+  if(el)el.value=dd+'/'+mm+'/'+yyyy;
+})();
+
+// Export PDF — print checklist only
+// Export PDF using jsPDF direct drawing — no html2canvas, guaranteed to work
+// Export PDF using jsPDF direct drawing
+// Export PDF using jsPDF direct drawing
+function exportPDF(){
+  var name    = document.getElementById('verifiedName').value || '';
+  var date    = document.getElementById('verifiedDate').value || '';
+  var company = document.getElementById('ck-company').value  || '';
+  var loc     = document.getElementById('ck-location').value || '';
+
+  var btn = document.querySelector('#exportWrap button');
+  if(btn){ btn.disabled=true; btn.textContent='Generating PDF...'; }
+
+  // Clean special chars that cause letter-spacing in jsPDF
+  function clean(str){
+    return (str||'')
+      .replace(/\u2265/g,'>=')   // ≥
+      .replace(/\u2264/g,'<=')   // ≤
+      .replace(/\u00b0/g,' deg') // °
+      .replace(/\u00b2/g,'2')    // ²
+      .replace(/\u00b3/g,'3')    // ³
+      .replace(/\u00b1/g,'+/-')  // ±
+      .replace(/\u2019/g,"'")    // '
+      .replace(/\u2013/g,'-')    // –
+      .replace(/\u2014/g,'-')    // —
+      .replace(/[^\x00-\x7F]/g,''); // strip remaining non-ASCII
+  }
+
+  try {
+    var doc = new window.jspdf.jsPDF({ unit:'mm', format:'a4', orientation:'portrait' });
+    var pw=210, ph=297, ml=10, mr=10, mt=10;
+    var cw = pw - ml - mr;
+    var y = mt;
+
+    // ── HEADER ──
+    doc.setFillColor(0,51,102);
+    doc.rect(ml, y, cw, 16, 'F');
+    doc.setTextColor(255,255,255);
+    doc.setFont('helvetica','bold'); doc.setFontSize(15);
+    doc.text('VOLLMER QWD 760', ml+4, y+7);
+    doc.setFont('helvetica','normal'); doc.setFontSize(8);
+    doc.text('Pre-Installation Checklist  |  Wire Erosion Machine', ml+4, y+13);
+    doc.setFontSize(7);
+    var docNo = formatDocNo(incrementDocNumber());
+    // Update header display too
+    var hdrEl = document.getElementById('hdr-docno');
+    if(hdrEl) hdrEl.textContent = docNo;
+    doc.text('Doc: '+docNo+'  Rev: A  Date: '+new Date().toLocaleDateString('en-GB'), pw-mr, y+5, {align:'right'});
+    if(company) doc.text('Company: '+clean(company), pw-mr, y+10, {align:'right'});
+    if(loc)     doc.text('Location: '+clean(loc),    pw-mr, y+14, {align:'right'});
+    y += 20;
+
+    // ── URGENT ──
+    doc.setFillColor(254,242,240);
+    doc.setDrawColor(192,57,43); doc.setLineWidth(0.4);
+    doc.rect(ml, y, cw, 7, 'FD');
+    doc.setTextColor(192,57,43);
+    doc.setFont('helvetica','bold'); doc.setFontSize(7.5);
+    doc.text('URGENT: Fire Extinguisher (FB 703) Ships EMPTY - Must be REFILLED before commissioning!', ml+3, y+4.5);
+    y += 11;
+
+    // ── COLLECT SECTIONS ──
+    var sections = [];
+    document.querySelectorAll('#t-ck .card').forEach(function(card){
+      var heading = '';
+      var ctEl = card.querySelector('.ct');
+      if(ctEl){
+        heading = clean(ctEl.innerText.replace(/[\uD800-\uDFFF].|[\u2600-\u27BF]/g,'').trim());
+      }
+      var items = [];
+      card.querySelectorAll('.cl li').forEach(function(li){
+        items.push({
+          title: clean(li.querySelector('strong') ? li.querySelector('strong').innerText : ''),
+          sub:   clean(li.querySelector('span')   ? li.querySelector('span').innerText   : '')
+        });
+      });
+      if(heading) sections.push({heading:heading, items:items});
+    });
+
+    // ── 2 COLUMN DRAW ──
+    var gap = 5;
+    var colW = (cw - gap) / 2;
+    var col0x = ml, col1x = ml + colW + gap;
+    var rowH = 8;
+    var secGap = 3;
+
+    function drawSection(sec, sx, sy){
+      var sh = 7 + sec.items.length * rowH;
+      doc.setDrawColor(200,210,225); doc.setLineWidth(0.3);
+      doc.rect(sx, sy, colW, sh);
+      // Section header
+      doc.setFillColor(0,51,102);
+      doc.rect(sx, sy, colW, 7, 'F');
+      doc.setTextColor(255,255,255);
+      doc.setFont('helvetica','bold'); doc.setFontSize(8.5);
+      doc.text(sec.heading, sx+3, sy+4.8);
+      var ry = sy + 7;
+      sec.items.forEach(function(item, i){
+        // Alternating bg
+        doc.setFillColor(i%2===0 ? 247:255, i%2===0 ? 248:255, i%2===0 ? 252:255);
+        doc.rect(sx, ry, colW, rowH, 'F');
+        // Checkbox
+        doc.setDrawColor(0,51,102); doc.setLineWidth(0.5);
+        doc.rect(sx+2.5, ry+2.2, 3.5, 3.5);
+        // Title text
+        doc.setTextColor(20,30,44);
+        doc.setFont('helvetica','bold'); doc.setFontSize(8);
+        doc.text(item.title, sx+8.5, ry+4.8);
+        // Sub text
+        doc.setFont('helvetica','normal'); doc.setFontSize(7);
+        doc.setTextColor(100,115,140);
+        doc.text(item.sub, sx+8.5, ry+7.2);
+        // Row separator
+        doc.setDrawColor(225,230,238); doc.setLineWidth(0.2);
+        doc.line(sx+1, ry+rowH, sx+colW-1, ry+rowH);
+        ry += rowH;
+      });
+      return sy + sh + secGap;
+    }
+
+    var leftY = y, rightY = y;
+    sections.forEach(function(sec, i){
+      if(i % 2 === 0) leftY  = drawSection(sec, col0x, leftY);
+      else            rightY = drawSection(sec, col1x, rightY);
+    });
+
+    y = Math.max(leftY, rightY) + 4;
+
+    // ── SIGN OFF — only Contact Person, Date, Signature ──
+    if(y + 30 > ph - 12){ doc.addPage(); y = mt; }
+
+    doc.setFillColor(0,51,102);
+    doc.rect(ml, y, cw, 7, 'F');
+    doc.setTextColor(255,255,255);
+    doc.setFont('helvetica','bold'); doc.setFontSize(9);
+    doc.text('VERIFIED BY (CUSTOMER)', ml+3, y+5);
+    y += 9;
+
+    var fields = [
+      {label:'CONTACT PERSON', val: clean(name)},
+      {label:'DATE',           val: clean(date)},
+      {label:'SIGNATURE',      val: ''}
+    ];
+    var fw = cw / fields.length;
+
+    // Box
+    doc.setDrawColor(200,210,225); doc.setLineWidth(0.3);
+    doc.rect(ml, y-1, cw, 18);
+
+    fields.forEach(function(f, i){
+      var fx = ml + i * fw;
+      // Vertical divider
+      if(i > 0){
+        doc.setDrawColor(210,218,230); doc.setLineWidth(0.2);
+        doc.line(fx, y-1, fx, y+17);
+      }
+      // Label
+      doc.setFont('helvetica','normal'); doc.setFontSize(7);
+      doc.setTextColor(120,135,155);
+      doc.text(f.label, fx+3, y+4);
+      // Value
+      if(f.val){
+        doc.setFont('helvetica','bold'); doc.setFontSize(9);
+        doc.setTextColor(20,30,44);
+        var txt = doc.splitTextToSize(f.val, fw-6)[0];
+        doc.text(txt, fx+3, y+11);
+      }
+      // Underline
+      doc.setDrawColor(0,51,102); doc.setLineWidth(0.5);
+      doc.line(fx+3, y+14, fx+fw-3, y+14);
+    });
+
+    y += 22;
+
+    // Footer note
+    doc.setFont('helvetica','normal'); doc.setFontSize(7);
+    doc.setTextColor(160,165,175);
+    doc.text('All items must be completed and verified before machine delivery and installation.', pw/2, y, {align:'center'});
+    doc.setFontSize(6.5);
+    doc.text('Vollmer QWD 760 - Pre-Installation Checklist | Confidential', pw/2, ph-6, {align:'center'});
+
+    doc.save('Vollmer_QWD760_Checklist.pdf');
+
+  } catch(e){
+    alert('PDF error: ' + e.message);
+  }
+
+  if(btn){ btn.disabled=false; btn.textContent='Print / Save as PDF'; }
+}
+</script>
+</body>
+</html>
