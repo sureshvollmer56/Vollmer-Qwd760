@@ -233,7 +233,19 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 .fk-w1{left:4px}.fk-w2{right:4px}
 
 /* SVG Diagram */
-.vo-wrap{background:#fff;border:1px solid var(--vborder);border-radius:10px;overflow:hidden;box-shadow:var(--sh);margin-bottom:16px}
+.vo-wrap{background:#fff;border:1px solid var(--vborder);border-radius:10px;overflow:hidden;box-shadow:var(--sh);margin-bottom:16px;position:relative}
+.vo-controls{position:absolute;top:8px;right:10px;display:flex;flex-direction:column;align-items:center;gap:3px;z-index:10;user-select:none}
+.vo-zoom-btn{width:18px;height:18px;border-radius:4px;border:1px solid #ccc;background:rgba(255,255,255,0.92);font-size:12px;font-weight:700;color:var(--vblue);cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;box-shadow:0 1px 3px rgba(0,0,0,0.12);transition:background .15s;padding:0}
+.vo-zoom-btn:hover{background:#e8f0fe}
+.vo-zoom-label{font-size:8px;font-weight:700;color:var(--vgray);text-align:center;line-height:1}
+.vo-zoom-reset{font-size:7px;font-weight:600;color:var(--vbluel);cursor:pointer;padding:2px 4px;border-radius:3px;border:1px solid #ccc;background:rgba(255,255,255,0.92);box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.vo-zoom-reset:hover{background:#e8f0fe}
+.vo-slider-wrap{display:none;align-items:center;gap:4px;padding:4px 8px;background:rgba(255,255,255,0.95);border:1px solid var(--vborder);border-radius:6px;position:absolute;bottom:48px;right:10px;z-index:10}
+.vo-slider-wrap.visible{display:flex}
+.vo-slider-label{font-size:9px;color:var(--vgrayl);white-space:nowrap}
+.vo-slider{width:120px;accent-color:var(--vblue);cursor:pointer;height:3px}
+.vo-svg-outer{overflow:auto;max-height:580px}
+.vo-svg-inner{transform-origin:0 0;display:inline-block}
 .vo-legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding:12px;background:var(--vbg2);border-top:1px solid var(--vborder)}
 .vo-leg{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--vgray)}
 .vo-dot{width:8px;height:8px;border-radius:50%}
@@ -299,7 +311,22 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <div class="st">System Connection Overview</div>
 <div class="sd">Animated diagram — all infrastructure connections flowing to the Vollmer QWD 760</div>
 <div class="vo-wrap">
-<svg class="vo-svg" viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg">
+<!-- Tiny floating zoom controls top-right -->
+<div class="vo-controls">
+  <button class="vo-zoom-btn" id="zoomIn" title="Zoom In">+</button>
+  <span class="vo-zoom-label" id="zoomLabel">100%</span>
+  <button class="vo-zoom-btn" id="zoomOut" title="Zoom Out">−</button>
+  <button class="vo-zoom-reset" id="zoomReset">↺</button>
+</div>
+<!-- Pan slider - appears when zoomed -->
+<div class="vo-slider-wrap" id="sliderWrap">
+  <span class="vo-slider-label">◀</span>
+  <input type="range" class="vo-slider" id="panSlider" min="0" max="100" value="0"/>
+  <span class="vo-slider-label">▶</span>
+</div>
+<div class="vo-svg-outer" id="svgOuter">
+<div class="vo-svg-inner" id="svgInner">
+<svg class="vo-svg" viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" width="1000">
 <defs>
   <!-- Flow animations -->
   <marker id="ae" markerWidth="6" markerHeight="4" refX="5" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#c0392b"/></marker>
@@ -316,10 +343,47 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <rect x="470" y="200" width="200" height="180" rx="10" fill="#fff" stroke="#003366" stroke-width="2.5"/>
 <rect x="475" y="205" width="190" height="100" rx="6" fill="#e8f0fe"/>
 <text x="570" y="250" text-anchor="middle" font-family="Source Sans 3" font-size="14" font-weight="700" fill="#003366">VOLLMER</text>
-<text x="570" y="272" text-anchor="middle" font-family="Source Sans 3" font-size="18" font-weight="800" fill="#003366">QWD 760</text>
-<text x="570" y="330" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#718096">4,500 kg · 6 kVA</text>
-<text x="570" y="348" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#718096">400V 3Ø · 10A</text>
-<text x="570" y="366" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#718096">Wire Erosion / EDM</text>
+<text x="570" y="268" text-anchor="middle" font-family="Source Sans 3" font-size="18" font-weight="800" fill="#003366">QWD 760</text>
+<!-- EDM Wire erosion animation below QWD 760 text -->
+<g transform="translate(570,285)">
+  <!-- Wire guides left and right -->
+  <rect x="-50" y="-3" width="8" height="6" rx="1" fill="#003366"/>
+  <rect x="42" y="-3" width="8" height="6" rx="1" fill="#003366"/>
+  <!-- Wire line left segment -->
+  <line x1="-42" y1="0" x2="-8" y2="0" stroke="#aaa" stroke-width="1.2" stroke-dasharray="3,2">
+    <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="0.3s" repeatCount="indefinite"/>
+  </line>
+  <!-- Wire line right segment -->
+  <line x1="8" y1="0" x2="42" y2="0" stroke="#aaa" stroke-width="1.2" stroke-dasharray="3,2">
+    <animate attributeName="stroke-dashoffset" from="0" to="-10" dur="0.3s" repeatCount="indefinite"/>
+  </line>
+  <!-- Workpiece block -->
+  <rect x="-6" y="-5" width="12" height="10" rx="1" fill="#c8d6e5" stroke="#003366" stroke-width="0.8"/>
+  <!-- EDM spark in gap between wire and workpiece -->
+  <line x1="-8" y1="0" x2="-5" y2="0" stroke="none"/>
+  <!-- Spark flashes -->
+  <polyline points="-8,0 -5,-2 -2,1 1,-1 4,0" fill="none" stroke="#f39c12" stroke-width="1.2" stroke-linecap="round">
+    <animate attributeName="opacity" values="0;1;0" dur="0.25s" repeatCount="indefinite"/>
+    <animate attributeName="points" values="-8,0 -5,-2 -2,1 1,-1 4,0; -8,0 -4,2 -1,-1 2,2 4,0; -8,0 -6,1 -2,-2 1,1 4,0" dur="0.25s" repeatCount="indefinite"/>
+  </polyline>
+  <!-- Spark glow -->
+  <circle cx="-2" cy="0" r="3" fill="#fff176" opacity="0">
+    <animate attributeName="opacity" values="0;0.9;0" dur="0.25s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="1;4;1" dur="0.25s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Tiny debris particles -->
+  <circle cx="-2" cy="-4" r="0.8" fill="#f39c12" opacity="0">
+    <animate attributeName="opacity" values="0;1;0" dur="0.25s" begin="0.05s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="-2;-7;-10" dur="0.25s" begin="0.05s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1" cy="-3" r="0.8" fill="#e67e22" opacity="0">
+    <animate attributeName="opacity" values="0;1;0" dur="0.25s" begin="0.1s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="-2;-6;-9" dur="0.25s" begin="0.1s" repeatCount="indefinite"/>
+  </circle>
+</g>
+<text x="570" y="315" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#718096">4,500 kg · 6 kVA</text>
+<text x="570" y="333" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#718096">400V 3Ø · 10A</text>
+<text x="570" y="351" text-anchor="middle" font-family="Source Sans 3" font-size="11" fill="#718096">Wire Erosion / EDM</text>
 
 <!-- ===== MCB2 — between UPS and Machine ===== -->
 <rect x="270" y="300" width="80" height="44" rx="6" fill="#f5f5f5" stroke="#4a4a4a" stroke-width="1.5"/>
@@ -331,7 +395,10 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 
 <!-- ===== MAINS (top-left) ===== -->
 <rect x="40" y="30" width="130" height="80" rx="8" fill="#fff" stroke="#c0392b" stroke-width="1.5"/>
-<text x="105" y="58" text-anchor="middle" font-size="22">⚡</text>
+<!-- Blinking lightning bolt -->
+<text x="105" y="58" text-anchor="middle" font-size="22">
+  ⚡<animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/>
+</text>
 <text x="105" y="78" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#c0392b">Mains Supply</text>
 <text x="105" y="95" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">415V 3Ø+N+PE · 50Hz</text>
 
@@ -347,7 +414,20 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 
 <!-- ===== UPS ===== -->
 <rect x="40" y="270" width="130" height="90" rx="8" fill="#e8f8f8" stroke="#008080" stroke-width="1.5"/>
-<text x="105" y="298" text-anchor="middle" font-size="18">🔋</text>
+<!-- Animated battery charging symbol -->
+<g transform="translate(105,290)">
+  <!-- Battery outline -->
+  <rect x="-14" y="-10" width="28" height="18" rx="3" fill="#fff" stroke="#008080" stroke-width="1.5"/>
+  <!-- Battery tip -->
+  <rect x="14" y="-5" width="4" height="8" rx="1" fill="#008080"/>
+  <!-- Battery fill animated empty to full -->
+  <rect x="-12" y="-8" width="24" height="14" rx="2" fill="#e8f8f8"/>
+  <rect x="-12" y="-8" width="24" height="14" rx="2" fill="#00b894">
+    <animate attributeName="width" values="0;24;0" dur="2s" repeatCount="indefinite"/>
+  </rect>
+  <!-- Lightning bolt over battery -->
+  <text x="0" y="5" text-anchor="middle" font-size="9" fill="#008080" opacity="0.9">⚡</text>
+</g>
 <text x="105" y="316" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#006666">Online UPS</text>
 <text x="105" y="331" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">3Ø · 10 KVA</text>
 <text x="105" y="346" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">400V Out · Unbalanced loads</text>
@@ -366,8 +446,18 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <!-- Outlet pipe right -->
 <line x1="825" y1="42" x2="832" y2="42" stroke="#27ae60" stroke-width="1.5"/>
 <rect x="831" y="40" width="3" height="4" rx="0.5" fill="#27ae60"/>
-<!-- Motor block -->
+<!-- Motor block with rotating fan circle inside -->
 <rect x="812" y="58" width="12" height="6" rx="1.5" fill="#27ae60" stroke="#1a6b3c" stroke-width="0.7"/>
+<!-- Rotating fan circle inside motor -->
+<g transform="translate(818,61)">
+  <circle r="2.5" fill="none" stroke="#fff" stroke-width="0.6"/>
+  <line x1="0" y1="-2.5" x2="0" y2="2.5" stroke="#fff" stroke-width="0.6">
+    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="0.5s" repeatCount="indefinite"/>
+  </line>
+  <line x1="-2.5" y1="0" x2="2.5" y2="0" stroke="#fff" stroke-width="0.6">
+    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="0.5s" repeatCount="indefinite"/>
+  </line>
+</g>
 <!-- Base plate -->
 <rect x="809" y="64" width="18" height="2.5" rx="1" fill="#718096"/>
 <!-- Labels -->
@@ -382,13 +472,41 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 
 <!-- ===== AIR DRYER ===== -->
 <rect x="900" y="30" width="90" height="75" rx="8" fill="#f0faf4" stroke="#27ae60" stroke-width="1.5"/>
-<text x="945" y="57" text-anchor="middle" font-size="18">❄️</text>
-<text x="945" y="75" text-anchor="middle" font-family="Source Sans 3" font-size="10" font-weight="700" fill="#1a6b3c">Air Dryer</text>
-<text x="945" y="90" text-anchor="middle" font-family="Source Sans 3" font-size="8" fill="#c0392b" font-weight="700">DRY AIR MUST</text>
+<text x="945" y="50" text-anchor="middle" font-size="14">❄️</text>
+<text x="945" y="65" text-anchor="middle" font-family="Source Sans 3" font-size="10" font-weight="700" fill="#1a6b3c">Air Dryer</text>
+<text x="945" y="78" text-anchor="middle" font-family="Source Sans 3" font-size="8" fill="#c0392b" font-weight="700">DRY AIR MUST</text>
+<!-- Water droplets splashing on right side of dryer box -->
+<circle cx="980" cy="57" r="2" fill="#4fc3f7" opacity="0.9">
+  <animate attributeName="cy" values="57;68;57" dur="1.2s" repeatCount="indefinite"/>
+  <animate attributeName="opacity" values="0.9;0;0.9" dur="1.2s" repeatCount="indefinite"/>
+</circle>
+<circle cx="984" cy="63" r="1.5" fill="#4fc3f7" opacity="0.8">
+  <animate attributeName="cy" values="63;74;63" dur="1s" repeatCount="indefinite"/>
+  <animate attributeName="opacity" values="0.8;0;0.8" dur="1s" repeatCount="indefinite"/>
+</circle>
+<circle cx="976" cy="67" r="1.2" fill="#29b6f6" opacity="0.7">
+  <animate attributeName="cy" values="67;78;67" dur="1.4s" repeatCount="indefinite"/>
+  <animate attributeName="opacity" values="0.7;0;0.7" dur="1.4s" repeatCount="indefinite"/>
+</circle>
+<circle cx="982" cy="71" r="1" fill="#4fc3f7" opacity="0.6">
+  <animate attributeName="cy" values="71;82;71" dur="0.9s" repeatCount="indefinite"/>
+  <animate attributeName="opacity" values="0.6;0;0.6" dur="0.9s" repeatCount="indefinite"/>
+</circle>
 
 <!-- ===== COMPUTER (right) ===== -->
 <rect x="820" y="260" width="140" height="90" rx="8" fill="#fff" stroke="#6c5ce7" stroke-width="1.5"/>
-<text x="890" y="290" text-anchor="middle" font-size="22">🖥️</text>
+<!-- Computer emoji -->
+<text x="890" y="293" text-anchor="middle" font-size="22">🖥️</text>
+<!-- Clip to just the screen area of the emoji -->
+<clipPath id="monitorscreen">
+  <rect x="869" y="270" width="42" height="14"/>
+</clipPath>
+<!-- 3 rows tiny binary flowing right only -->
+<g clip-path="url(#monitorscreen)" font-family="monospace" font-size="3.5" font-weight="bold" fill="#00cfff" opacity="0.9">
+  <text y="275"><animate attributeName="x" values="920;820" dur="2s" repeatCount="indefinite"/>1 0 1 0 1 1 0 1 0 1 0 1 1 0 1 0 1 0 1 1 0</text>
+  <text y="280"><animate attributeName="x" values="920;820" dur="2.6s" repeatCount="indefinite"/>0 1 0 1 0 0 1 0 1 0 1 0 0 1 0 1 0 0 1 0 1</text>
+  <text y="285"><animate attributeName="x" values="920;820" dur="1.8s" repeatCount="indefinite"/>1 1 0 0 1 0 1 1 0 1 1 0 0 1 0 1 1 0 0 1 0</text>
+</g>
 <text x="890" y="312" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#4c3da0">Computer + UPS</text>
 <text x="890" y="327" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">Cat7/Cat6 LAN</text>
 
@@ -510,6 +628,8 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <line x1="820" y1="480" x2="670" y2="380" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,6" opacity=".4"/>
 
 </svg>
+</div><!-- end svgInner -->
+</div><!-- end svgOuter -->
 <div class="vo-legend">
   <div class="vo-leg"><div class="vo-dot" style="background:#c0392b"></div>Electrical (400V 3Ø)</div>
   <div class="vo-leg"><div class="vo-dot" style="background:#27ae60"></div>Compressed Air</div>
@@ -1116,6 +1236,63 @@ function sw(id){
   event.target.classList.add('active');
   window.scrollTo({top:document.querySelector('.main').offsetTop-40,behavior:'smooth'});
 }
+
+// ===== ZOOM & PAN =====
+(function(){
+  let zoom = 1;
+  const MIN = 0.5, MAX = 3, STEP = 0.25;
+  const inner = document.getElementById('svgInner');
+  const outer = document.getElementById('svgOuter');
+  const label = document.getElementById('zoomLabel');
+  const slider = document.getElementById('panSlider');
+  const sliderWrap = document.getElementById('sliderWrap');
+
+  function applyZoom(){
+    inner.style.transform = `scale(${zoom})`;
+    label.textContent = Math.round(zoom*100)+'%';
+    // Show slider only when zoomed in
+    const svgW = 1000 * zoom;
+    const outerW = outer.clientWidth;
+    if(svgW > outerW){
+      sliderWrap.classList.add('visible');
+      // Update scroll from slider
+      updateScroll();
+    } else {
+      sliderWrap.classList.remove('visible');
+      outer.scrollLeft = 0;
+    }
+  }
+
+  function updateScroll(){
+    const svgW = 1000 * zoom;
+    const outerW = outer.clientWidth;
+    const maxScroll = svgW - outerW;
+    if(maxScroll > 0){
+      outer.scrollLeft = (slider.value / 100) * maxScroll;
+    }
+  }
+
+  document.getElementById('zoomIn').onclick = ()=>{
+    zoom = Math.min(MAX, parseFloat((zoom+STEP).toFixed(2)));
+    applyZoom();
+  };
+  document.getElementById('zoomOut').onclick = ()=>{
+    zoom = Math.max(MIN, parseFloat((zoom-STEP).toFixed(2)));
+    applyZoom();
+  };
+  document.getElementById('zoomReset').onclick = ()=>{
+    zoom = 1; slider.value = 0; applyZoom();
+  };
+  slider.oninput = updateScroll;
+
+  // Sync slider when user manually scrolls
+  outer.onscroll = ()=>{
+    const svgW = 1000 * zoom;
+    const outerW = outer.clientWidth;
+    const maxScroll = svgW - outerW;
+    if(maxScroll > 0) slider.value = (outer.scrollLeft / maxScroll) * 100;
+  };
+})();
 function olb(s){document.getElementById('lbi').src=s;document.getElementById('lb').classList.add('active')}
 function clb(){document.getElementById('lb').classList.remove('active')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')clb()});
