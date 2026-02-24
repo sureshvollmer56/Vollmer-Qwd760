@@ -426,35 +426,39 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 
 
 <!-- LAN: Machine ↔ Computer (bidirectional purple dashed from machine edge) -->
-<!-- Arrow: Machine → Computer (top line) -->
-<line x1="670" y1="280" x2="820" y2="280" stroke="#6c5ce7" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#al)">
-  <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="1s" repeatCount="indefinite"/>
-</line>
-<!-- Arrow: Computer → Machine (bottom line) -->
-<marker id="al2" markerWidth="6" markerHeight="4" refX="1" refY="2" orient="auto"><polygon points="6 0, 0 2, 6 4" fill="#6c5ce7"/></marker>
-<line x1="820" y1="300" x2="670" y2="300" stroke="#6c5ce7" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#al2)">
-  <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1s" repeatCount="indefinite"/>
-</line>
-<!-- Label -->
-<rect x="675" y="283" width="70" height="16" rx="3" fill="#fff" stroke="#6c5ce7" stroke-width="1"/>
-<text x="710" y="294" text-anchor="middle" font-family="Source Sans 3" font-size="8" font-weight="600" fill="#6c5ce7">Cat7/Cat6 LAN</text>
+<!-- LAN: Ethernet cable with RJ45 connectors on both ends -->
+<!-- Left RJ45 connector (machine side) -->
+<rect x="668" y="284" width="10" height="12" rx="1" fill="#4c3da0" stroke="#6c5ce7" stroke-width="0.8"/>
+<rect x="670" y="286" width="2" height="8" rx="0.5" fill="#a89de0"/>
+<rect x="673" y="286" width="2" height="8" rx="0.5" fill="#a89de0"/>
+<rect x="676" y="286" width="2" height="8" rx="0.5" fill="#a89de0"/>
+<rect x="668" y="293" width="10" height="3" rx="1" fill="#6c5ce7"/>
+<!-- Cable body with slight wave -->
+<path d="M678,290 C690,282 700,298 720,290 C740,282 750,298 770,290 C785,284 800,290 810,290" fill="none" stroke="#6c5ce7" stroke-width="3" stroke-linecap="round"/>
+<!-- Cable pairs (twisted look) -->
+<path d="M678,290 C690,282 700,298 720,290 C740,282 750,298 770,290 C785,284 800,290 810,290" fill="none" stroke="#9b8fe0" stroke-width="1" stroke-dasharray="3,5" stroke-linecap="round"/>
+<!-- Right RJ45 connector (computer side) -->
+<rect x="810" y="284" width="10" height="12" rx="1" fill="#4c3da0" stroke="#6c5ce7" stroke-width="0.8"/>
+<rect x="812" y="286" width="2" height="8" rx="0.5" fill="#a89de0"/>
+<rect x="815" y="286" width="2" height="8" rx="0.5" fill="#a89de0"/>
+<rect x="818" y="286" width="2" height="8" rx="0.5" fill="#a89de0"/>
+<rect x="810" y="293" width="10" height="3" rx="1" fill="#6c5ce7"/>
+<!-- LAN cable info panel -->
+<rect x="693" y="300" width="84" height="32" rx="5" fill="#f3f0ff" stroke="#6c5ce7" stroke-width="0.8"/>
+<text x="700" y="311" font-family="Source Sans 3" font-size="7" font-weight="700" fill="#4c3da0">📌 Cable Type</text>
+<text x="700" y="321" font-family="Source Sans 3" font-size="7" fill="#4c3da0">Cat7 or Cat6</text>
+<text x="700" y="329" font-family="Source Sans 3" font-size="7" fill="#718096">Max 20m · Shielded</text>
 
-<!-- Earth: Earth Pit → Machine (gold dashed line 1) -->
-<polyline points="170,475 300,475 300,390 470,390" fill="none" stroke="#d4a017" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#ag)">
-  <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1.5s" repeatCount="indefinite"/>
-</polyline>
-<!-- Earth: Earth Pit → UPS (gold dashed - straight up to UPS bottom edge) -->
-<line x1="105" y1="430" x2="105" y2="360" fill="none" stroke="#d4a017" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#ag)">
-  <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1.5s" repeatCount="indefinite"/>
-</line>
+<!-- Earth: Earth Pit → Machine (gold solid line, no animation) -->
+<polyline points="170,475 300,475 300,380 470,380" fill="none" stroke="#d4a017" stroke-width="2" stroke-dasharray="8,5" marker-end="url(#ag)"/>
+<!-- Earth: Earth Pit → UPS (gold solid line, no animation) -->
+<line x1="105" y1="430" x2="105" y2="360" fill="none" stroke="#d4a017" stroke-width="2" stroke-dasharray="8,5" marker-end="url(#ag)"/>
 <!-- Label -->
 <rect x="200" y="478" width="100" height="18" rx="4" fill="#fff" stroke="#d4a017" stroke-width="1"/>
 <text x="250" y="491" text-anchor="middle" font-family="Source Sans 3" font-size="9" font-weight="600" fill="#d4a017">1 × 4mm² Earth</text>
 
-<!-- Fire connection (red dashed to machine) -->
-<line x1="820" y1="480" x2="670" y2="380" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,6" opacity=".4">
-  <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="2s" repeatCount="indefinite"/>
-</line>
+<!-- Fire Extinguisher — plain static line, no animation -->
+<line x1="820" y1="480" x2="670" y2="380" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,6" opacity=".4"/>
 
 </svg>
 <div class="vo-legend">
@@ -629,12 +633,20 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
   <div class="card">
     <div class="ct"><div class="ic">🔋</div>UPS & Stabilizer</div>
     <table class="sp">
-      <tr><td>Type</td><td>Online 3Ø UPS with Stabilizer</td></tr>
+      <tr><td>Type</td><td>Online / Double Conversion <span class="badge badge-r">MUST</span></td></tr>
+      <tr><td></td><td style="font-size:11px;color:#c0392b">Not Line-interactive or Offline type</td></tr>
+      <tr><td>Transfer Time</td><td>Zero transfer time — double conversion only</td></tr>
       <tr><td>Capacity</td><td>10 KVA</td></tr>
       <tr><td>MCB Rating</td><td>16 A</td></tr>
-      <tr><td>Output Voltage</td><td>400V, 50 Hz</td></tr>
-      <tr><td>Unbalanced Loads</td><td>Must support <span class="badge badge-r">MUST</span></td></tr>
+      <tr><td>Output Voltage</td><td>400V, 50 Hz <span class="badge badge-r">CONSTANT</span></td></tr>
+      <tr><td>Output Waveform</td><td>Pure Sine Wave <span class="badge badge-r">MUST</span></td></tr>
+      <tr><td>Unbalanced Loads</td><td>Must support 3-phase unbalanced <span class="badge badge-r">MUST</span></td></tr>
+      <tr><td></td><td style="font-size:11px;color:#c0392b">Output voltage must remain stable at 400V even under unbalanced load conditions — voltage variation not acceptable</td></tr>
+      <tr><td>N-E Voltage Output</td><td>&lt; 0.2V at UPS output <span class="badge badge-r">CRITICAL</span></td></tr>
+      <tr><td></td><td style="font-size:11px;color:#c0392b">Most standard UPS fail this — verify before purchase</td></tr>
       <tr><td>Isolation Transformer</td><td>Recommended</td></tr>
+      <tr><td>Recommendation</td><td>Online UPS with built-in stabilizer preferred <span class="badge badge-w">SUGGESTED</span></td></tr>
+      <tr><td></td><td style="font-size:11px;color:#2d6a4f">A combined Online UPS + Stabilizer unit ensures constant 400V output, handles input voltage fluctuations from mains, and protects the machine from surges — better than separate units</td></tr>
     </table>
   </div>
 </div>
@@ -1173,8 +1185,9 @@ function exportPDF(){
       var items = [];
       card.querySelectorAll('.cl li').forEach(function(li){
         items.push({
-          title: clean(li.querySelector('strong') ? li.querySelector('strong').innerText : ''),
-          sub:   clean(li.querySelector('span')   ? li.querySelector('span').innerText   : '')
+          title:   clean(li.querySelector('strong') ? li.querySelector('strong').innerText : ''),
+          sub:     clean(li.querySelector('span')   ? li.querySelector('span').innerText   : ''),
+          checked: li.querySelector('.cb') ? li.querySelector('.cb').classList.contains('checked') : false
         });
       });
       if(heading) sections.push({heading:heading, items:items});
@@ -1204,7 +1217,15 @@ function exportPDF(){
         doc.rect(sx, ry, colW, rowH, 'F');
         // Checkbox
         doc.setDrawColor(0,51,102); doc.setLineWidth(0.5);
-        doc.rect(sx+2.5, ry+2.2, 3.5, 3.5);
+        if(item.checked){
+          doc.setFillColor(0,51,102);
+          doc.rect(sx+2.5, ry+2.2, 3.5, 3.5, 'FD');
+          doc.setTextColor(255,255,255);
+          doc.setFont('helvetica','bold'); doc.setFontSize(7);
+          doc.text('✓', sx+3.0, ry+5.2);
+        } else {
+          doc.rect(sx+2.5, ry+2.2, 3.5, 3.5);
+        }
         // Title text
         doc.setTextColor(20,30,44);
         doc.setFont('helvetica','bold'); doc.setFontSize(8);
