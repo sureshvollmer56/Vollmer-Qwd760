@@ -20,8 +20,8 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 .banner{background:linear-gradient(135deg,#002244 0%,#003366 60%,#004080 100%);color:#fff;padding:20px 40px;position:relative}
 .banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#0066b3,#00aaff,#0066b3)}
 .banner-in{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.banner-left .badge{display:inline-block;background:#c0392b;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:8px;color:#fff}
-.banner-left h1{font-size:30px;font-weight:800;line-height:1.15}
+.banner-left .badge{display:inline-block;background:#c0392b;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:3px;margin-bottom:8px;color:#fff}
+.banner-left h1{font-size:22px;font-weight:700;line-height:1.15}
 .banner-left h1 span{color:#5bb8ff}
 .banner-left .sub{font-size:12px;color:rgba(255,255,255,.4);margin-top:2px}
 .banner-right{text-align:right;font-size:11px;color:rgba(255,255,255,.3);line-height:2.2}
@@ -62,8 +62,8 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 
 /* Emergency */
 .emergency{background:#c0392b;color:#fff;border-radius:10px;padding:18px 22px;margin-bottom:18px;box-shadow:0 4px 16px rgba(192,57,43,.25)}
-.emergency strong{font-size:15px;display:block;margin-bottom:4px}
-.emergency p{font-size:13px;opacity:.92;margin:0}
+.emergency strong{font-size:15px;margin-bottom:4px}
+.emergency p{font-size:13px;opacity:.95;margin:4px 0}
 
 /* Steps */
 .step{display:flex;gap:10px;margin-bottom:10px}
@@ -257,13 +257,20 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
     <h1>Vollmer <span>QWD 760</span></h1>
     <div class="sub">Wire Erosion Machine — Site Preparation & Requirements Document</div>
   </div>
-  <div class="banner-right">
-    <strong>Document No:</strong> <span id="hdr-docno">PIR-QWD760-001</span><br>
-    <strong>Revision:</strong> Rev. A<br>
-    <strong>Date:</strong> <span id="hdr-date">______________</span><br>
-    <strong>Customer:</strong> <span id="hdr-company">______________</span><br>
-    <strong>Location:</strong> <span id="hdr-location">______________</span><br>
-    <strong>Contact:</strong> <span id="hdr-contact">______________</span>
+  <div class="banner-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+    <div style="text-align:right;font-size:11px;color:rgba(255,255,255,.3);line-height:2.2">
+      <strong style="color:rgba(255,255,255,.65)">Customer:</strong> <span id="hdr-company">______________</span><br>
+      <strong style="color:rgba(255,255,255,.65)">Location:</strong> <span id="hdr-location">______________</span><br>
+      <strong style="color:rgba(255,255,255,.65)">Contact:</strong> <span id="hdr-contact">______________</span>
+    </div>
+    <div id="view-counter" style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:5px 12px;margin-top:4px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+      <span id="view-count-display" style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.9)">0</span>
+      <span style="font-size:10px;color:rgba(255,255,255,0.5)">views</span>
+    </div>
   </div>
 </div></div>
 
@@ -734,7 +741,8 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 </div>
 <div class="hb warn">
   <strong>⚠ Software Compatibility Notice</strong>
-  <p>The machine control software is a legacy system compatible with <strong>Windows XP</strong> and <strong>Windows 7</strong> only. It does <strong>NOT support Windows 10 or Windows 11</strong>. The customer must ensure a compatible operating system is installed on the dedicated machine PC. Please plan accordingly, as modern PCs may require OS downgrade or a dedicated legacy workstation.</p>
+  <p>The machine control software supports <strong>Windows XP and Windows 7 only</strong> — it does not run on Windows 10 or Windows 11.</p>
+  <p style="margin-top:8px">For Windows 10/11 compatibility, the latest version of Vollmer software must be purchased separately. Please contact Vollmer for upgrade options before planning your workstation.</p>
 </div>
 </div>
 
@@ -864,18 +872,6 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <div class="tc" id="t-sa">
 <div class="st">Safety Requirements</div>
 <div class="sd">Fire safety, CO₂, pacemaker warning, room labelling</div>
-<div class="emergency">
-  <strong>🧯 URGENT — Fire Extinguisher (FB 703) Ships EMPTY — CO₂ Must Be Filled Before Commissioning</strong>
-  <p>The CO₂ fire extinguisher bottle is shipped <strong>empty</strong> and disconnected for safe transport. Before fixing the cylinder back into the machine, the following steps are <strong>mandatory</strong>:</p>
-  <ol style="margin:8px 0 4px 18px;font-size:13px;line-height:2">
-    <li>Take the empty cylinder to an authorised CO₂ refilling station and have it <strong>filled to the specified charge weight</strong></li>
-    <li><strong>Weigh the filled cylinder</strong> and record the gross weight — this is your reference for future inspections</li>
-    <li>Mark the cylinder with the <strong>date of refill</strong> and <strong>filled weight</strong> (gross weight including gas)</li>
-    <li>Reconnect the valve and hose to the machine as per the circuit diagram</li>
-    <li>Switch on the fire extinguisher control unit and verify the system is active</li>
-  </ol>
-  <p style="margin-top:6px;color:#c0392b;font-weight:700">⚠ Machine CANNOT be commissioned or operated without a fully charged and properly installed fire extinguisher.</p>
-</div>
 <div class="g2">
   <div class="card">
     <div class="ct"><div class="ic">⚠️</div>Room Labelling (Mandatory)</div>
@@ -894,6 +890,16 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
       <tr><td>Laser Class</td><td>Class 2</td></tr>
     </table>
   </div>
+</div>
+<div class="emergency" style="margin-top:16px">
+  <p style="font-size:15px;font-weight:700;margin-bottom:10px;">🧯 URGENT — Fire Extinguisher Cylinder Ships EMPTY — CO₂ Must Be Filled Before Commissioning</p>
+  <p>The CO₂ fire extinguisher cylinder is shipped empty and disconnected for safe transport. Before fixing the cylinder back into the machine, the following steps are mandatory:</p>
+  <ol style="margin:10px 0 6px 20px;font-size:13px;line-height:2.2">
+    <li>Take the empty cylinder to an authorised CO₂ refilling station and fill it to the specified charge weight</li>
+    <li>Weigh the filled cylinder and record the gross weight — this is your reference for future inspections</li>
+    <li>Mark the cylinder with the date of refill and filled weight (gross weight including gas)</li>
+  </ol>
+  <p style="margin-top:8px;font-weight:700;">⚠ Machine CANNOT be commissioned or operated without a fully charged and properly installed fire extinguisher.</p>
 </div>
 </div>
 
@@ -944,9 +950,9 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
   <div class="card">
     <div class="ct"><div class="ic">⚡</div>Electrical</div>
     <ul class="cl">
-      <li><div class="cb"></div><div class="cl-l"><strong>415V 3Ø + N + PE supply</strong><span>Verified & tested</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>415V 3Ø + N + PE supply</strong><span>Verified & tested — 400V at UPS output</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>MCB 16A installed</strong><span>Dedicated for machine</span></div></li>
-      <li><div class="cb"></div><div class="cl-l"><strong>Online 3Ø UPS 10KVA</strong><span>415V output, unbalanced load support</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Online 3Ø UPS 10KVA</strong><span>400V output, unbalanced load support</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>Separate earth pit + 2 cables</strong><span>1 → stabilizer, 1 → machine</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>N-E voltage &lt; 0.2V verified</strong><span>Measured & documented</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>2× European plugs (230V)</strong><span>For computer workstation</span></div></li>
@@ -981,7 +987,7 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
       <li><div class="cb"></div><div class="cl-l"><strong>Cat7/Cat6 LAN cable</strong><span>Max 20m</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>Computer + table</strong><span>Win XP/7 only, with UPS</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>Software installed</strong><span>AutoCAD, Path Mgmt, ExProg</span></div></li>
-      <li><div class="cb"></div><div class="cl-l"><strong>Fire extinguisher filled with CO₂</strong><span>URGENT — FB 703, ships empty</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Fire extinguisher cylinder filled with CO₂</strong><span>Cylinder ships empty — fill before commissioning</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>CO₂ warning signs</strong><span>Inside & outside all doors</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>Tool holding adaptions</strong><span>SK40/HSK63/Between Centres</span></div></li>
     </ul>
@@ -1040,6 +1046,22 @@ document.querySelectorAll('.cb').forEach(cb=>{
   cb.style.cursor='pointer';
   cb.addEventListener('click',function(){this.classList.toggle('checked')});
 });
+
+// ── View Counter ──
+(function(){
+  var el = document.getElementById('view-count-display');
+  fetch('https://api.countapi.xyz/hit/vollmer-qwd760/visits')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(el && d.value) el.textContent = d.value.toLocaleString();
+    })
+    .catch(function(){
+      // fallback to localStorage if API fails
+      var c = parseInt(localStorage.getItem('vqwd_views')||'0') + 1;
+      localStorage.setItem('vqwd_views', c);
+      if(el) el.textContent = c.toLocaleString();
+    });
+})();
 
 // ── Doc Number Management ──
 function getDocNumber(){
