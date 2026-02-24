@@ -629,6 +629,19 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
       <tr><td>Cable</td><td>4 × 4 mm²</td></tr>
       <tr><td>N-E Voltage</td><td>&lt; 0.2V <span class="badge badge-r">MANDATORY</span></td></tr>
     </table>
+    <!-- Earthing inner box -->
+    <div style="margin-top:12px;border:1.5px solid #d4a017;border-radius:8px;overflow:hidden;">
+      <div style="background:#d4a017;padding:6px 10px;display:flex;align-items:center;gap:6px;">
+        <span style="font-size:14px;">🌍</span>
+        <span style="font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;color:#fff;">Earthing / Grounding</span>
+      </div>
+      <table class="sp" style="margin:0;">
+        <tr><td>Earthing</td><td>Separate dedicated Earth Pit <span class="badge badge-r">MANDATORY</span></td></tr>
+        <tr><td>Earth Cables</td><td>2 cables (1 → stabilizer, 1 → machine)</td></tr>
+        <tr><td>Cable Size</td><td>4 mm²</td></tr>
+        <tr><td>N-E Voltage</td><td>&lt; 0.2V (must be verified)</td></tr>
+      </table>
+    </div>
   </div>
   <div class="card">
     <div class="ct"><div class="ic">🔋</div>UPS & Stabilizer</div>
@@ -644,21 +657,15 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
       <tr><td></td><td style="font-size:11px;color:#c0392b">Output voltage must remain stable at 400V even under unbalanced load conditions — voltage variation not acceptable</td></tr>
       <tr><td>N-E Voltage Output</td><td>&lt; 0.2V at UPS output <span class="badge badge-r">CRITICAL</span></td></tr>
       <tr><td></td><td style="font-size:11px;color:#c0392b">Most standard UPS fail this — verify before purchase</td></tr>
+      <tr><td>Efficiency</td><td>≥ 90% at full load <span class="badge badge-w">VERIFY</span></td></tr>
+      <tr><td></td><td style="font-size:11px;color:#2d6a4f">Continuous duty rated at 40–45°C ambient — Indian factory conditions. Capacity may derate at high temperature — always select 1.5× to 2× oversize</td></tr>
+      <tr><td>Continuous Load</td><td>100% continuous duty rated <span class="badge badge-r">MUST</span></td></tr>
+      <tr><td>Overload Capacity</td><td>≥ 125% for 10 min (motor start surges)</td></tr>
       <tr><td>Isolation Transformer</td><td>Recommended</td></tr>
       <tr><td>Recommendation</td><td>Online UPS with built-in stabilizer preferred <span class="badge badge-w">SUGGESTED</span></td></tr>
       <tr><td></td><td style="font-size:11px;color:#2d6a4f">A combined Online UPS + Stabilizer unit ensures constant 400V output, handles input voltage fluctuations from mains, and protects the machine from surges — better than separate units</td></tr>
     </table>
   </div>
-</div>
-<div class="card">
-  <div class="ct"><div class="ic">🌍</div>Earthing / Grounding</div>
-  <table class="sp">
-    <tr><td>Earthing</td><td>Separate dedicated Earth Pit <span class="badge badge-r">MANDATORY</span></td></tr>
-    <tr><td>Earth Cables</td><td>2 cables (1 → stabilizer, 1 → machine)</td></tr>
-    <tr><td>Cable Size</td><td>4 mm²</td></tr>
-    <tr><td>N-E Voltage</td><td>&lt; 0.2V (must be verified)</td></tr>
-  </table>
-</div>
 </div>
 
 <!-- ===== FOUNDATION ===== -->
