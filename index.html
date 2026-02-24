@@ -663,7 +663,27 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <div class="sd">Vollmer QWD 760 — Full technical specifications and capabilities</div>
 
 <div class="emergency">
-  <strong>🧯 URGENT — Fire Extinguisher (FB 703) Ships EMPTY</strong>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+    <!-- Rotating ambulance light SVG -->
+    <svg width="28" height="28" viewBox="0 0 28 28" style="flex-shrink:0">
+      <!-- Light base -->
+      <rect x="8" y="17" width="12" height="5" rx="2" fill="#fff" opacity="0.9"/>
+      <!-- Dome -->
+      <ellipse cx="14" cy="17" rx="7" ry="4" fill="#ff2222"/>
+      <!-- Rotating beam rays -->
+      <g transform-origin="14 14">
+        <animateTransform attributeName="transform" type="rotate" from="0 14 14" to="360 14 14" dur="1s" repeatCount="indefinite"/>
+        <line x1="14" y1="14" x2="14" y2="3" stroke="#ffee00" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+        <line x1="14" y1="14" x2="24" y2="10" stroke="#ffee00" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+        <line x1="14" y1="14" x2="4" y2="10" stroke="#ffee00" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+      </g>
+      <!-- Flashing dome glow -->
+      <ellipse cx="14" cy="16" rx="6" ry="3.5" fill="#ff4444">
+        <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite"/>
+      </ellipse>
+    </svg>
+    <strong style="font-size:15px;">URGENT — Fire Extinguisher (FB 703) Ships EMPTY</strong>
+  </div>
   <p>Machine CO₂ fire extinguisher bottle is shipped EMPTY. Valve and hose disconnected for transport. Must be FILLED with CO₂ and reconnected BEFORE commissioning. Machine CANNOT start without it.</p>
 </div>
 
@@ -801,7 +821,13 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
     <!-- Earthing inner box -->
     <div style="margin-top:12px;border:1.5px solid #d4a017;border-radius:8px;overflow:hidden;">
       <div style="background:#d4a017;padding:6px 10px;display:flex;align-items:center;gap:6px;">
-        <span style="font-size:14px;">🌍</span>
+        <svg width="16" height="16" viewBox="0 0 16 16">
+          <line x1="8" y1="1" x2="8" y2="6" stroke="#fff" stroke-width="1.5"/>
+          <line x1="2" y1="6" x2="14" y2="6" stroke="#fff" stroke-width="1.5"/>
+          <line x1="4" y1="9" x2="12" y2="9" stroke="#fff" stroke-width="1.5"/>
+          <line x1="6" y1="12" x2="10" y2="12" stroke="#fff" stroke-width="1.5"/>
+          <line x1="7" y1="14.5" x2="9" y2="14.5" stroke="#fff" stroke-width="1.5"/>
+        </svg>
         <span style="font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:700;color:#fff;">Earthing / Grounding</span>
       </div>
       <table class="sp" style="margin:0;">
@@ -813,7 +839,21 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
     </div>
   </div>
   <div class="card">
-    <div class="ct"><div class="ic">🔋</div>UPS & Stabilizer</div>
+    <div class="ct">
+      <!-- Animated battery charging icon -->
+      <div class="ic" style="overflow:visible;position:relative">
+        <svg width="22" height="16" viewBox="0 0 22 16">
+          <rect x="0" y="2" width="18" height="12" rx="2" fill="none" stroke="#008080" stroke-width="1.5"/>
+          <rect x="18" y="5" width="3" height="6" rx="1" fill="#008080"/>
+          <rect x="1.5" y="3.5" width="15" height="9" rx="1" fill="#e8f8f8"/>
+          <rect x="1.5" y="3.5" width="15" height="9" rx="1" fill="#00b894">
+            <animate attributeName="width" values="0;15;0" dur="2s" repeatCount="indefinite"/>
+          </rect>
+          <text x="9" y="11" text-anchor="middle" font-size="7" font-weight="bold" fill="#006666">⚡</text>
+        </svg>
+      </div>
+      UPS & Stabilizer
+    </div>
     <table class="sp">
       <tr><td>Type</td><td>Online / Double Conversion <span class="badge badge-r">MUST</span></td></tr>
       <tr><td></td><td style="font-size:11px;color:#c0392b">Not Line-interactive or Offline type</td></tr>
@@ -835,6 +875,7 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
       <tr><td></td><td style="font-size:11px;color:#2d6a4f">A combined Online UPS + Stabilizer unit ensures constant 400V output, handles input voltage fluctuations from mains, and protects the machine from surges — better than separate units</td></tr>
     </table>
   </div>
+</div>
 </div>
 
 <!-- ===== FOUNDATION ===== -->
@@ -1219,7 +1260,6 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
   </div>
 </div>
 </div>
-
 </div>
 
 <div class="footer">
