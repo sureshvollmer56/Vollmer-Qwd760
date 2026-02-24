@@ -250,48 +250,6 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 </head>
 <body>
 
-<!-- WELCOME DIALOG -->
-<div id="welcomeOverlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,20,50,0.82);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)">
-  <div style="background:#fff;border-radius:16px;width:100%;max-width:480px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.35)">
-    <!-- Dialog Header -->
-    <div style="background:linear-gradient(135deg,#002244,#003366);padding:22px 28px 18px">
-      <div style="display:inline-block;background:#cc5500;color:#fff;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:3px;margin-bottom:8px">Pre-Installation Report</div>
-      <div style="font-size:22px;font-weight:800;color:#fff">Vollmer <span style="color:#5bb8ff">QWD 760</span></div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px">Please enter your details to continue — all fields are optional</div>
-    </div>
-    <!-- Dialog Body -->
-    <div style="padding:22px 28px 10px">
-      <div style="margin-bottom:14px">
-        <label style="font-size:11px;font-weight:700;color:#003366;display:block;margin-bottom:5px;letter-spacing:.3px">COMPANY NAME</label>
-        <input id="dlg-company" type="text" placeholder="e.g. Precision Tools Pvt Ltd" style="width:100%;border:none;border-bottom:2px solid #dde2ea;padding:8px 4px;font-size:14px;font-family:inherit;outline:none;color:#1a202c;transition:border-color .2s" onfocus="this.style.borderColor='#cc5500'" onblur="this.style.borderColor='#dde2ea'">
-      </div>
-      <div style="margin-bottom:14px">
-        <label style="font-size:11px;font-weight:700;color:#003366;display:block;margin-bottom:5px;letter-spacing:.3px">LOCATION / CITY</label>
-        <input id="dlg-location" type="text" placeholder="e.g. Bangalore, Karnataka" style="width:100%;border:none;border-bottom:2px solid #dde2ea;padding:8px 4px;font-size:14px;font-family:inherit;outline:none;color:#1a202c;transition:border-color .2s" onfocus="this.style.borderColor='#cc5500'" onblur="this.style.borderColor='#dde2ea'">
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-        <div>
-          <label style="font-size:11px;font-weight:700;color:#003366;display:block;margin-bottom:5px;letter-spacing:.3px">CONTACT PERSON</label>
-          <input id="dlg-contact" type="text" placeholder="Full name" style="width:100%;border:none;border-bottom:2px solid #dde2ea;padding:8px 4px;font-size:14px;font-family:inherit;outline:none;color:#1a202c;transition:border-color .2s" onfocus="this.style.borderColor='#cc5500'" onblur="this.style.borderColor='#dde2ea'">
-        </div>
-        <div>
-          <label style="font-size:11px;font-weight:700;color:#003366;display:block;margin-bottom:5px;letter-spacing:.3px">MOBILE</label>
-          <input id="dlg-mobile" type="tel" placeholder="+91 XXXXX XXXXX" style="width:100%;border:none;border-bottom:2px solid #dde2ea;padding:8px 4px;font-size:14px;font-family:inherit;outline:none;color:#1a202c;transition:border-color .2s" onfocus="this.style.borderColor='#cc5500'" onblur="this.style.borderColor='#dde2ea'">
-        </div>
-      </div>
-      <div style="margin-bottom:6px">
-        <label style="font-size:11px;font-weight:700;color:#003366;display:block;margin-bottom:5px;letter-spacing:.3px">EMAIL</label>
-        <input id="dlg-email" type="email" placeholder="contact@company.com" style="width:100%;border:none;border-bottom:2px solid #dde2ea;padding:8px 4px;font-size:14px;font-family:inherit;outline:none;color:#1a202c;transition:border-color .2s" onfocus="this.style.borderColor='#cc5500'" onblur="this.style.borderColor='#dde2ea'">
-      </div>
-    </div>
-    <!-- Dialog Footer -->
-    <div style="padding:14px 28px 22px;display:flex;gap:10px;justify-content:flex-end">
-      <button onclick="submitDialog()" style="background:linear-gradient(135deg,#cc5500,#e06010);color:#fff;border:none;padding:11px 32px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.4px;box-shadow:0 4px 14px rgba(204,85,0,.3);transition:all .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">Proceed →</button>
-      <button onclick="submitDialog()" style="background:none;border:1px solid #dde2ea;color:#718096;padding:11px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.borderColor='#aaa'" onmouseout="this.style.borderColor='#dde2ea'">Skip</button>
-    </div>
-  </div>
-</div>
-
 <!-- COMPACT BANNER -->
 <div class="banner"><div class="banner-in">
   <div class="banner-left">
@@ -364,7 +322,11 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 
 <!-- ===== MCB ===== -->
 <rect x="40" y="155" width="130" height="70" rx="8" fill="#fff" stroke="#c0392b" stroke-width="1.5"/>
-<text x="105" y="180" text-anchor="middle" font-size="18">🔌</text>
+<!-- MCB symbol: vertical line with switch arc -->
+<line x1="105" y1="163" x2="105" y2="172" stroke="#c0392b" stroke-width="2"/>
+<line x1="105" y1="180" x2="105" y2="185" stroke="#c0392b" stroke-width="2"/>
+<path d="M105,172 Q115,172 112,180" fill="none" stroke="#c0392b" stroke-width="2"/>
+<circle cx="105" cy="178" r="1.5" fill="#c0392b"/>
 <text x="105" y="198" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#c0392b">MCB</text>
 <text x="105" y="213" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">3 × 16A Fuse</text>
 
@@ -373,13 +335,19 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <text x="105" y="298" text-anchor="middle" font-size="18">🔋</text>
 <text x="105" y="316" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#c0392b">Online UPS</text>
 <text x="105" y="331" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">3Ø · 10 KVA</text>
-<text x="105" y="346" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">415V Out · Unbalanced loads</text>
+<text x="105" y="346" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">400V Out · Unbalanced loads</text>
 
 <!-- ===== COMPRESSOR (top-right) ===== -->
 <rect x="770" y="30" width="110" height="75" rx="8" fill="#fff" stroke="#27ae60" stroke-width="1.5"/>
 <text x="825" y="57" text-anchor="middle" font-size="18">💨</text>
 <text x="825" y="75" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#1a6b3c">Compressor</text>
 <text x="825" y="92" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#718096">≥ 6 bar · 10 l/min</text>
+
+<!-- Air connection info panel below compressor -->
+<rect x="750" y="112" width="150" height="44" rx="6" fill="#f0faf4" stroke="#27ae60" stroke-width="1"/>
+<text x="758" y="127" font-family="Source Sans 3" font-size="8" font-weight="700" fill="#1a6b3c">ℹ Air Connection</text>
+<text x="758" y="140" font-family="Source Sans 3" font-size="7.5" fill="#2d6a4f">Needed depending on</text>
+<text x="758" y="151" font-family="Source Sans 3" font-size="7.5" fill="#2d6a4f">machine scope of supply</text>
 
 <!-- ===== AIR DRYER ===== -->
 <rect x="900" y="30" width="90" height="75" rx="8" fill="#f0faf4" stroke="#27ae60" stroke-width="1.5"/>
@@ -406,7 +374,7 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <text x="890" y="470" text-anchor="middle" font-size="22">🧯</text>
 <text x="890" y="492" text-anchor="middle" font-family="Source Sans 3" font-size="11" font-weight="700" fill="#c0392b">Fire Extinguisher</text>
 <text x="890" y="507" text-anchor="middle" font-family="Source Sans 3" font-size="9" fill="#c0392b" font-weight="600">⚠ Ships EMPTY</text>
-<text x="890" y="520" text-anchor="middle" font-family="Source Sans 3" font-size="8" fill="#718096">Must REFILL before use</text>
+<text x="890" y="520" text-anchor="middle" font-family="Source Sans 3" font-size="8" fill="#718096">Fill CO₂ before use</text>
 
 <!-- ===== ANIMATED CONNECTIONS ===== -->
 
@@ -426,7 +394,7 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 </line>
 <!-- Label -->
 <rect x="210" y="298" width="140" height="20" rx="4" fill="#fff" stroke="#c0392b" stroke-width="1"/>
-<text x="280" y="312" text-anchor="middle" font-family="Source Sans 3" font-size="9" font-weight="600" fill="#c0392b">415V 3Ø · 4×4mm² · Unbal.</text>
+<text x="280" y="312" text-anchor="middle" font-family="Source Sans 3" font-size="9" font-weight="600" fill="#c0392b">400V 3Ø · 4×4mm² · Unbal.</text>
 
 <!-- Air: Compressor → Dryer (horizontal green dashed) -->
 <line x1="880" y1="67" x2="900" y2="67" stroke="#27ae60" stroke-width="2" stroke-dasharray="6,4">
@@ -437,9 +405,7 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <polyline points="945,105 945,200 600,200" fill="none" stroke="#27ae60" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#aa)">
   <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1.5s" repeatCount="indefinite"/>
 </polyline>
-<!-- Label -->
-<rect x="760" y="140" width="100" height="18" rx="4" fill="#fff" stroke="#27ae60" stroke-width="1"/>
-<text x="810" y="153" text-anchor="middle" font-family="Source Sans 3" font-size="9" font-weight="600" fill="#27ae60">≥ 6 bar Dry Air</text>
+
 
 <!-- LAN: Machine ↔ Computer (bidirectional purple dashed from machine edge) -->
 <!-- Arrow: Machine → Computer (top line) -->
@@ -459,10 +425,10 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <polyline points="170,475 300,475 300,380 400,380" fill="none" stroke="#d4a017" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#ag)">
   <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1.5s" repeatCount="indefinite"/>
 </polyline>
-<!-- Earth: Earth Pit → UPS (gold dashed line 2) -->
-<polyline points="170,460 230,460 230,360 105,360" fill="none" stroke="#d4a017" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#ag)">
+<!-- Earth: Earth Pit → UPS (gold dashed - straight up to UPS bottom edge) -->
+<line x1="105" y1="430" x2="105" y2="360" fill="none" stroke="#d4a017" stroke-width="2.5" stroke-dasharray="8,5" marker-end="url(#ag)">
   <animate attributeName="stroke-dashoffset" from="0" to="-26" dur="1.5s" repeatCount="indefinite"/>
-</polyline>
+</line>
 <!-- Label -->
 <rect x="200" y="478" width="100" height="18" rx="4" fill="#fff" stroke="#d4a017" stroke-width="1"/>
 <text x="250" y="491" text-anchor="middle" font-family="Source Sans 3" font-size="9" font-weight="600" fill="#d4a017">1 × 4mm² Earth</text>
@@ -507,7 +473,7 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 
 <div class="emergency">
   <strong>🧯 URGENT — Fire Extinguisher (FB 703) Ships EMPTY</strong>
-  <p>Machine fire extinguisher bottle is shipped EMPTY. Valve and hose disconnected for transport. Must be REFILLED and reconnected BEFORE commissioning. Machine CANNOT start without it.</p>
+  <p>Machine CO₂ fire extinguisher bottle is shipped EMPTY. Valve and hose disconnected for transport. Must be FILLED with CO₂ and reconnected BEFORE commissioning. Machine CANNOT start without it.</p>
 </div>
 
 <div class="g2">
@@ -577,6 +543,7 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
     <div class="ct"><div class="ic">⚡</div>Power & Utilities</div>
     <table class="sp">
       <tr><td>Supply Voltage</td><td>415V AC ±1% <span class="badge badge-r">CONSTANT</span></td></tr>
+      <tr><td>Via Online UPS</td><td>400V AC output from UPS <span class="badge badge-w">IF UPS USED</span></td></tr>
       <tr><td>Phase</td><td>3-Phase + Neutral + Earth</td></tr>
       <tr><td>Frequency</td><td>50 Hz</td></tr>
       <tr><td>Connected Load</td><td>6 kVA</td></tr>
@@ -898,8 +865,16 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 <div class="st">Safety Requirements</div>
 <div class="sd">Fire safety, CO₂, pacemaker warning, room labelling</div>
 <div class="emergency">
-  <strong>🧯 URGENT — Fire Extinguisher (FB 703) Ships EMPTY</strong>
-  <p>Customer MUST: (1) Reconnect valve, (2) Connect hose, (3) Refill tank, (4) Switch on fire-extinguisher control. Machine CANNOT operate without it.</p>
+  <strong>🧯 URGENT — Fire Extinguisher (FB 703) Ships EMPTY — CO₂ Must Be Filled Before Commissioning</strong>
+  <p>The CO₂ fire extinguisher bottle is shipped <strong>empty</strong> and disconnected for safe transport. Before fixing the cylinder back into the machine, the following steps are <strong>mandatory</strong>:</p>
+  <ol style="margin:8px 0 4px 18px;font-size:13px;line-height:2">
+    <li>Take the empty cylinder to an authorised CO₂ refilling station and have it <strong>filled to the specified charge weight</strong></li>
+    <li><strong>Weigh the filled cylinder</strong> and record the gross weight — this is your reference for future inspections</li>
+    <li>Mark the cylinder with the <strong>date of refill</strong> and <strong>filled weight</strong> (gross weight including gas)</li>
+    <li>Reconnect the valve and hose to the machine as per the circuit diagram</li>
+    <li>Switch on the fire extinguisher control unit and verify the system is active</li>
+  </ol>
+  <p style="margin-top:6px;color:#c0392b;font-weight:700">⚠ Machine CANNOT be commissioned or operated without a fully charged and properly installed fire extinguisher.</p>
 </div>
 <div class="g2">
   <div class="card">
@@ -1006,7 +981,7 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
       <li><div class="cb"></div><div class="cl-l"><strong>Cat7/Cat6 LAN cable</strong><span>Max 20m</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>Computer + table</strong><span>Win XP/7 only, with UPS</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>Software installed</strong><span>AutoCAD, Path Mgmt, ExProg</span></div></li>
-      <li><div class="cb"></div><div class="cl-l"><strong>Fire extinguisher refilled</strong><span>URGENT — FB 703</span></div></li>
+      <li><div class="cb"></div><div class="cl-l"><strong>Fire extinguisher filled with CO₂</strong><span>URGENT — FB 703, ships empty</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>CO₂ warning signs</strong><span>Inside & outside all doors</span></div></li>
       <li><div class="cb"></div><div class="cl-l"><strong>Tool holding adaptions</strong><span>SK40/HSK63/Between Centres</span></div></li>
     </ul>
@@ -1049,48 +1024,6 @@ body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--vbg);colo
 </div>
 
 <script>
-// Welcome Dialog
-function submitDialog(){
-  var company  = document.getElementById('dlg-company').value.trim();
-  var location = document.getElementById('dlg-location').value.trim();
-  var contact  = document.getElementById('dlg-contact').value.trim();
-
-  // Update banner header
-  var hdrCompany  = document.getElementById('hdr-company');
-  var hdrLocation = document.getElementById('hdr-location');
-  var hdrContact  = document.getElementById('hdr-contact');
-  var hdrDate     = document.getElementById('hdr-date');
-
-  // Auto-shrink font for long company names
-  if(company){
-    hdrCompany.textContent = company;
-    var len = company.length;
-    hdrCompany.style.fontSize = len > 30 ? '9px' : len > 20 ? '10px' : len > 14 ? '11px' : '';
-  }
-  if(location) hdrLocation.textContent = location;
-  if(contact)  hdrContact.textContent  = contact;
-
-  // Set date in banner
-  var d=new Date(), dd=String(d.getDate()).padStart(2,'0'), mm=String(d.getMonth()+1).padStart(2,'0'), yyyy=d.getFullYear();
-  hdrDate.textContent = dd+'/'+mm+'/'+yyyy;
-
-  // Pre-fill checklist sign-off fields (editable by user)
-  if(company)  document.getElementById('ck-company').value  = company;
-  if(location) document.getElementById('ck-location').value = location;
-  if(contact)  document.getElementById('verifiedName').value = contact;
-
-  // Hide dialog
-  document.getElementById('welcomeOverlay').style.display = 'none';
-}
-
-// Allow Enter key to submit dialog
-document.addEventListener('keydown', function(e){
-  if(e.key === 'Enter' && document.getElementById('welcomeOverlay').style.display !== 'none'){
-    submitDialog();
-  }
-});
-
-
 function sw(id){
   document.querySelectorAll('.tc').forEach(e=>e.classList.remove('active'));
   document.querySelectorAll('.tb').forEach(e=>e.classList.remove('active'));
